@@ -1,0 +1,144 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&family=Roboto&display=swap');
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Open Sans', sans-serif;
+}
+
+html {
+    width: 100%;
+    margin: 0px;
+    padding: 0px;
+    overflow-x: hidden;
+}
+
+body {
+    background-color: #196363;
+    width: 100vw;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+    background-color: skyblue;
+}
+
+.subcontainer2 {
+    display: flex;
+    justify-self: center;
+    justify-content: center;
+}
+
+.data__container {
+    padding: 3rem;
+}
+
+.weather__container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.city__name {
+    text-align: center;
+    text-decoration: underline;
+}
+
+h4 {
+    display: inline-block;
+}
+
+h2, h3 {
+    text-align: center;
+}
+
+h3 {
+    margin-top: 1.5rem;
+}
+
+.back__link {
+    width: 9%;
+    padding: 0.5rem;
+    font-size: 2rem;
+    border: 1px solid black;
+    background-color: #ccc;
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+.main__header {
+    text-align: center;
+    background-color: #a52a2a;
+    color: white;
+    padding: 0.75rem;
+}
+
+.secondary__header {
+    background-color: #A5622A;
+    text-align: center;
+    padding: 0.75rem;
+    margin: 0rem;
+}
+
+form {
+    text-align: center;
+    margin: 2rem;
+}
+
+.error {
+    margin: 2rem;
+}
+
+input[type="text"] {
+    font-size: 1.5rem;
+    margin: 0 1.5rem;
+    border-radius: 8px;
+    border: none;
+    padding: 1rem;
+}
+
+input[type="submit"] {
+    font-size: 1.5rem;
+    margin: 1rem;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    padding: 1rem;
+}
+
+select {
+    font-size: 1.5rem;
+    margin: 1rem;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    padding: 1rem;
+}
+
+a {
+    text-decoration: none;
+    color: white;
+}
+
+td {
+    border: 1px solid black;
+    padding: 0.5rem;
+    text-align: right;
+    color: white;
+}
+
+table {
+    margin-top: 2rem;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#table__title {
+    font-size: 2rem;
+}
+
+#myDiv {
+    margin-top: 3rem;
+}
