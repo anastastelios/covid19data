@@ -17,14 +17,16 @@ const selectCountry = document.getElementById('country-select');
 const graphDiv = document.getElementById('myDiv');
 const tableTitles = document.getElementById('table__titles');
 
-const complicatedCountries = ['Australia', 'Canada', 'China', 'France', 'Germany', 'Netherlands', 'United Kingdom', 'US'];
-const doubleCountries = ['Iran (Islamic Republic of)'];
+const complicatedCountries = ['australia', 'canada', 'china', 'france', 'germany', 'netherlands', 'united-kingdom', 'us'];
+const doubleCountries = ['Iran (Islamic Republic of)', 'Korea, South', 'Republic of Korea', 'Russian Federation', 'Taiwan*', 'Bahamas, The', '', 'Others'];
 
 axios(`https://api.covid19api.com/countries`)
     .then(resp => {
         let output = '<option value="">--Please select a country--</option>'
         resp.data.forEach(country => {
-            output += `<option value="${country.Slug}">${country.Country}</option>`
+            if (doubleCountries.findIndex(item => item === country.Country) === -1) {
+                output += `<option value="${country.Slug}">${country.Country}</option>`
+            }
         })
         selectCountry.innerHTML = output;
     }).catch(error => {
@@ -75,22 +77,24 @@ axios(`https://api.covid19api.com/summary`)
         <td> </td>
     </tr>`;
         countriesDescDeath.forEach(country => {
-            let countryPopulation;
-            worldpopulation.forEach(item => {
-                if (item.country === country.Country) {
-                    countryPopulation = +item.population;
-                }
-            })
-            output += `<tr>
-            <td>${country.Country}</td>
-            <td>${country.TotalDeaths}</td>
-            <td> + ${country.NewDeaths}</td>
-            <td>${country.TotalConfirmed}</td>
-            <td> + ${country.NewConfirmed}</td>
-            <td>${country.TotalRecovered}</td>
-            <td> + ${country.NewRecovered}</td>
-            <td>${(country.TotalDeaths / countryPopulation * 1000000).toFixed(2)}</td>
-        </tr>`
+            if (doubleCountries.findIndex(item => item === country.Country) === -1) {
+                let countryPopulation;
+                worldpopulation.forEach(item => {
+                    if (item.country === country.Country) {
+                        countryPopulation = +item.population;
+                    }
+                })
+                output += `<tr>
+                <td>${country.Country}</td>
+                <td>${country.TotalDeaths}</td>
+                <td> + ${country.NewDeaths}</td>
+                <td>${country.TotalConfirmed}</td>
+                <td> + ${country.NewConfirmed}</td>
+                <td>${country.TotalRecovered}</td>
+                <td> + ${country.NewRecovered}</td>
+                <td>${(country.TotalDeaths / countryPopulation * 1000000).toFixed(2)}</td>
+            </tr>`
+            }
         })
         dataTable.innerHTML = output;
     }).catch(error => {
@@ -161,9 +165,11 @@ submitBtn.addEventListener('click', (e) => {
     if (selectElem.value === 'deathGraph') {
         axios(`https://api.covid19api.com/country/${curCountry.toLowerCase()}/status/deaths`)
             .then(resp => {
-                if (complicatedCountries.findIndex(item => item === resp.data[0].Country) > -1) {
+                tableTitles.innerHTML = '';
+                if (complicatedCountries.findIndex(item => item === curCountry) > -1) {
                     dataTable.innerHTML = '<h1 class="missing__data">This data will be available soon</h1><br><h2 class="missing__data">Error printing graph</h2>';
-                    tableTitles.innerHTML = '';
+                } else if (resp.data[resp.data.length - 1].Cases === 0) {
+                    dataTable.innerHTML = '<h1 class="missing__data">There is not a single case at the moment</h1><br><h2 class="missing__data">Luckily we cannot make a graph yet</h2>';
                 } else {
                     let dateTable = [];
                     let casesTable = [];
@@ -212,9 +218,11 @@ submitBtn.addEventListener('click', (e) => {
     if (selectElem.value === 'casesGraph') {
         axios(`https://api.covid19api.com/country/${curCountry.toLowerCase()}/status/confirmed`)
             .then(resp => {
-                if (complicatedCountries.findIndex(item => item === resp.data[0].Country) > -1) {
+                tableTitles.innerHTML = '';
+                if (complicatedCountries.findIndex(item => item === curCountry) > -1) {
                     dataTable.innerHTML = '<h1 class="missing__data">This data will be available soon</h1><br><h2 class="missing__data">Error printing graph</h2>';
-                    tableTitles.innerHTML = '';
+                } else if (resp.data[resp.data.length - 1].Cases === 0) {
+                    dataTable.innerHTML = '<h1 class="missing__data">There is not a single case at the moment</h1><br><h2 class="missing__data">Luckily we cannot make a graph yet</h2>';
                 } else {
                     let dateTable = [];
                     let casesTable = [];
@@ -261,11 +269,13 @@ submitBtn.addEventListener('click', (e) => {
     }
 
     if (selectElem.value === 'deathDay') {
-        axios(`https://api.covid19api.com/dayone/country/${curCountry.toLowerCase()}/status/deaths`)
+        axios(`https://api.covid19api.com/country/${curCountry.toLowerCase()}/status/deaths`) //  /dayone
             .then(resp => {
-                if (complicatedCountries.findIndex(item => item === resp.data[0].Country) > -1) {
+                tableTitles.innerHTML = '';
+                if (complicatedCountries.findIndex(item => item === curCountry) > -1) {
                     dataTable.innerHTML = '<h1 class="missing__data">This data will be available soon</h1><br><h2 class="missing__data">Error printing graph</h2>';
-                    tableTitles.innerHTML = '';
+                } else if (resp.data[resp.data.length - 1].Cases === 0) {
+                    dataTable.innerHTML = '<h1 class="missing__data">There is not a single case at the moment</h1><br><h2 class="missing__data">Luckily we cannot make a graph yet</h2>';
                 } else {
                     let dateTable = [];
                     let casesTable = [];
@@ -316,11 +326,13 @@ submitBtn.addEventListener('click', (e) => {
     }
 
     if (selectElem.value === 'casesDay') {
-        axios(`https://api.covid19api.com/dayone/country/${curCountry.toLowerCase()}/status/confirmed`)
+        axios(`https://api.covid19api.com/country/${curCountry.toLowerCase()}/status/confirmed`)
             .then(resp => {
-                if (complicatedCountries.findIndex(item => item === resp.data[0].Country) > -1) {
+                tableTitles.innerHTML = '';
+                if (complicatedCountries.findIndex(item => item === curCountry) > -1) {
                     dataTable.innerHTML = '<h1 class="missing__data">This data will be available soon</h1><br><h2 class="missing__data">Error printing graph</h2>';
-                    tableTitles.innerHTML = '';
+                } else if (resp.data[resp.data.length - 1].Cases === 0) {
+                    dataTable.innerHTML = '<h1 class="missing__data">There is not a single case at the moment</h1><br><h2 class="missing__data">Luckily we cannot make a graph yet</h2>';
                 } else {
                     let dateTable = [];
                     let casesTable = [];
@@ -371,13 +383,15 @@ submitBtn.addEventListener('click', (e) => {
 
 
     if (selectElem.value === 'casesDeathsGraph') {
-        axios(`https://api.covid19api.com/country/${curCountry.toLowerCase()}/status/deaths`)
+        axios(`https://api.covid19api.com/country/${curCountry.toLowerCase()}/status/confirmed`)
             .then(resp => {
-                axios(`https://api.covid19api.com/country/${curCountry.toLowerCase()}/status/confirmed`)
+                axios(`https://api.covid19api.com/country/${curCountry.toLowerCase()}/status/deaths`)
                     .then(resp2 => {
-                        if (complicatedCountries.findIndex(item => item === resp.data[0].Country) > -1) {
+                        tableTitles.innerHTML = '';
+                        if (complicatedCountries.findIndex(item => item === curCountry) > -1) {
                             dataTable.innerHTML = '<h1 class="missing__data">This data will be available soon</h1><br><h2 class="missing__data">Error printing graph</h2>';
-                            tableTitles.innerHTML = '';
+                        } else if (resp.data[resp.data.length - 1].Cases === 0) {
+                            dataTable.innerHTML = '<h1 class="missing__data">There is not a single case at the moment</h1><br><h2 class="missing__data">Luckily we cannot make a graph yet</h2>';
                         } else {
                             let dateTable = [];
                             let casesTable = [];
@@ -400,7 +414,7 @@ submitBtn.addEventListener('click', (e) => {
                                 y: casesTable,
                                 mode: 'lines',
                                 type: 'scatter',
-                                name: `Deaths`
+                                name: `Cases`
                             };
 
                             var trace2 = {
@@ -408,7 +422,7 @@ submitBtn.addEventListener('click', (e) => {
                                 y: casesTable2,
                                 mode: 'lines',
                                 type: 'scatter',
-                                name: `Cases`
+                                name: `Deaths`
                             };
 
                             var data = [trace1, trace2];
@@ -426,7 +440,7 @@ submitBtn.addEventListener('click', (e) => {
                                     title: 'Date'
                                 },
                                 yaxis: {
-                                    title: 'Total Deaths'
+                                    title: 'Total Cases/Deaths'
                                 },
                                 title: `Total number of Covid-19 deaths/cases in ${resp.data[0].Country}`
                             };
@@ -441,13 +455,15 @@ submitBtn.addEventListener('click', (e) => {
 
 
     if (selectElem.value === 'casesDeathsDay') {
-        axios(`https://api.covid19api.com/dayone/country/${curCountry.toLowerCase()}/status/deaths`)
+        axios(`https://api.covid19api.com/country/${curCountry.toLowerCase()}/status/confirmed`)
             .then(resp => {
-                axios(`https://api.covid19api.com/dayone/country/${curCountry.toLowerCase()}/status/confirmed`)
+                axios(`https://api.covid19api.com/country/${curCountry.toLowerCase()}/status/deaths`)
                     .then(resp2 => {
-                        if (complicatedCountries.findIndex(item => item === resp.data[0].Country) > -1) {
+                        tableTitles.innerHTML = '';
+                        if (complicatedCountries.findIndex(item => item === curCountry) > -1) {
                             dataTable.innerHTML = '<h1 class="missing__data">This data will be available soon</h1><br><h2 class="missing__data">Error printing graph</h2>';
-                            tableTitles.innerHTML = '';
+                        } else if (resp.data[resp.data.length - 1].Cases === 0) {
+                            dataTable.innerHTML = '<h1 class="missing__data">There is not a single case at the moment</h1><br><h2 class="missing__data">Luckily we cannot make a graph yet</h2>';
                         } else {
                             let dateTable = [];
                             let casesTable = [];
@@ -477,14 +493,14 @@ submitBtn.addEventListener('click', (e) => {
                                 x: dateTable,
                                 y: casesTable,
                                 type: 'bar',
-                                name: `Deaths`
+                                name: `Cases`
                             };
 
                             var trace2 = {
                                 x: dateTable2,
                                 y: casesTable2,
                                 type: 'bar',
-                                name: `Cases`
+                                name: `Deaths`
                             };
 
                             var data = [trace1, trace2];
@@ -502,7 +518,7 @@ submitBtn.addEventListener('click', (e) => {
                                     title: 'Date'
                                 },
                                 yaxis: {
-                                    title: 'Number of deaths'
+                                    title: 'Number of Cases/Deaths'
                                 },
                                 title: `Number of new Covid-19 Deaths/Cases per day in ${resp.data[0].Country}`
                             };
@@ -515,18 +531,3 @@ submitBtn.addEventListener('click', (e) => {
             });
     }
 });
-
-// submitBtn.addEventListener('click', (e) => {
-//     e.preventDefault();
-//     const country = countryInput.value;
-//     console.log(country);
-
-//     if (selectElem.value === 'summary') {
-//         axios(`https://api.covid19api.com/country/${country.toLowerCase()}/status/confirmed`)
-//             .then(resp => {
-//                 console.log(resp.data[resp.data.length - 1].Cases);
-//             }).catch(error => {
-//                 console.log(error);
-//             });
-//     }
-// });
