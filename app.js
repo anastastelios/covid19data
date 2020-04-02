@@ -1,5 +1,13 @@
 'use strict'
 
+let worldpopulation;
+
+fetch('./worldpopulation.json')
+    .then(res => res.json())
+    .then(data => {
+        worldpopulation = data;
+    })
+    .catch(err => console.error(err));
 
 const submitBtn = document.querySelector('input[type="submit"]');
 const selectElem = document.getElementById('data-select');
@@ -7,11 +15,14 @@ const countryInput = document.querySelector('input[name="countryName"]');
 const dataTable = document.getElementById('data__table');
 const selectCountry = document.getElementById('country-select');
 const graphDiv = document.getElementById('myDiv');
+const tableTitles = document.getElementById('table__titles');
+
+const complicatedCountries = ['Australia', 'Canada', 'China', 'France', 'Germany', 'Netherlands', 'United Kingdom', 'US'];
+const doubleCountries = ['Iran (Islamic Republic of)'];
 
 axios(`https://api.covid19api.com/countries`)
     .then(resp => {
         let output = '<option value="">--Please select a country--</option>'
-        console.log(resp.data);
         resp.data.forEach(country => {
             output += `<option value="${country.Slug}">${country.Country}</option>`
         })
@@ -22,8 +33,14 @@ axios(`https://api.covid19api.com/countries`)
 
 axios(`https://api.covid19api.com/summary`)
     .then(resp => {
-        const countriesDescDeath = resp.data.Countries.sort(function (a, b) {
+        const countriesDescDeathA = resp.data.Countries.sort(function (a, b) {
             return b.TotalDeaths - a.TotalDeaths
+        });
+
+        const countriesDescDeath = countriesDescDeathA.sort(function (a, b) {
+            if (a.TotalDeaths === b.TotalDeaths) {
+                return b.TotalConfirmed - a.TotalConfirmed
+            }
         });
         let worldTotDeaths = 0;
         let worldNewDeaths = 0;
@@ -39,16 +56,15 @@ axios(`https://api.covid19api.com/summary`)
             worldRecovered += country.TotalRecovered;
             worldNewRecovered += country.NewRecovered;
         })
+        tableTitles.innerHTML = `<th>Country Name</th>
+        <th>TotalDeaths</th>
+        <th>NewDeaths</th>
+        <th>Total Cases</th>
+        <th>New Cases</th>
+        <th>Total Recovered</th>
+        <th>New Recovered</th>
+        <th>TotalDeaths/1M</th>`
         let output = `<tr>
-        <td>Country Name</td>
-        <td>TotalDeaths</td>
-        <td>NewDeaths</td>
-        <td>Total Cases</td>
-        <td>New Cases</td>
-        <td>Total Recovered</td>
-        <td>New Recovered</td>
-    </tr>
-    <tr>
         <td>World</td>
         <td>${worldTotDeaths}</td>
         <td> + ${worldNewDeaths}</td>
@@ -56,8 +72,15 @@ axios(`https://api.covid19api.com/summary`)
         <td> + ${worldNewCases}</td>
         <td>${worldRecovered}</td>
         <td> + ${worldNewRecovered}</td>
+        <td> </td>
     </tr>`;
         countriesDescDeath.forEach(country => {
+            let countryPopulation;
+            worldpopulation.forEach(item => {
+                if (item.country === country.Country) {
+                    countryPopulation = +item.population;
+                }
+            })
             output += `<tr>
             <td>${country.Country}</td>
             <td>${country.TotalDeaths}</td>
@@ -66,6 +89,7 @@ axios(`https://api.covid19api.com/summary`)
             <td> + ${country.NewConfirmed}</td>
             <td>${country.TotalRecovered}</td>
             <td> + ${country.NewRecovered}</td>
+            <td>${(country.TotalDeaths / countryPopulation * 1000000).toFixed(2)}</td>
         </tr>`
         })
         dataTable.innerHTML = output;
@@ -76,15 +100,21 @@ axios(`https://api.covid19api.com/summary`)
 submitBtn.addEventListener('click', (e) => {
     e.preventDefault();
     const curCountry = selectCountry.value;
-    console.log(curCountry);
 
     if (selectElem.value === 'summary') {
+        tableTitles.innerHTML = '';
         graphDiv.innerHTML = '';
         let output = '';
         axios(`https://api.covid19api.com/summary`)
             .then(resp => {
                 resp.data.Countries.forEach(country => {
+                    let countryPopulation;
                     if (country.Slug === curCountry) {
+                        worldpopulation.forEach(item => {
+                            if (item.country === country.Country) {
+                                countryPopulation = +item.population;
+                            }
+                        })
                         output += `
                         <tr>
                         <td>Country Name</td>
@@ -114,6 +144,10 @@ submitBtn.addEventListener('click', (e) => {
                     <td>New Recovered</td>
                     <td> + ${country.NewRecovered}</td>
                 </tr>
+                <tr>
+                    <td>TotDeaths/1M</td>
+                    <td>${(country.TotalDeaths / countryPopulation * 1000000).toFixed(2)}</td>
+                </tr>
                         `;
                     }
                 });
@@ -127,38 +161,49 @@ submitBtn.addEventListener('click', (e) => {
     if (selectElem.value === 'deathGraph') {
         axios(`https://api.covid19api.com/country/${curCountry.toLowerCase()}/status/deaths`)
             .then(resp => {
-                console.log(resp.data);
-                let dateTable = [];
-                let casesTable = [];
-                resp.data.forEach(day => {
-                    dateTable.push(day.Date);
-                    casesTable.push(day.Cases);
-                });
+                if (complicatedCountries.findIndex(item => item === resp.data[0].Country) > -1) {
+                    dataTable.innerHTML = '<h1 class="missing__data">This data will be available soon</h1><br><h2 class="missing__data">Error printing graph</h2>';
+                    tableTitles.innerHTML = '';
+                } else {
+                    let dateTable = [];
+                    let casesTable = [];
+                    resp.data.forEach(day => {
+                        dateTable.push(day.Date);
+                        casesTable.push(day.Cases);
+                    });
 
-                dataTable.innerHTML = '';
+                    dataTable.innerHTML = '';
 
-                var trace1 = {
-                    x: dateTable,
-                    y: casesTable,
-                    mode: 'lines',
-                    type: 'scatter',
-                    name: `${curCountry}`
-                };
+                    var trace1 = {
+                        x: dateTable,
+                        y: casesTable,
+                        mode: 'lines',
+                        type: 'scatter',
+                        name: `${curCountry}`
+                    };
 
-                var data = [trace1];
+                    var data = [trace1];
 
-                var layout = {
-                    xaxis: {
-                        type: 'date',
-                        title: 'Date'
-                    },
-                    yaxis: {
-                        title: 'Total Deaths'
-                    },
-                    title: `Total number of Covid-19 deaths in ${curCountry}`
-                };
+                    var layout = {
+                        font: {
+                            family: 'Courier New, monospace',
+                            size: 18,
+                            color: 'white'
+                        },
+                        plot_bgcolor: "#d3d3d3",
+                        paper_bgcolor: "#089595",
+                        xaxis: {
+                            type: 'date',
+                            title: 'Date'
+                        },
+                        yaxis: {
+                            title: 'Total Deaths'
+                        },
+                        title: `Total number of Covid-19 deaths in ${resp.data[0].Country}`
+                    };
 
-                Plotly.newPlot('myDiv', data, layout, { showSendToCloud: true });
+                    Plotly.newPlot('myDiv', data, layout, { showSendToCloud: true });
+                }
             }).catch(error => {
                 console.log(error);
             });
@@ -167,38 +212,49 @@ submitBtn.addEventListener('click', (e) => {
     if (selectElem.value === 'casesGraph') {
         axios(`https://api.covid19api.com/country/${curCountry.toLowerCase()}/status/confirmed`)
             .then(resp => {
-                console.log(resp.data);
-                let dateTable = [];
-                let casesTable = [];
-                resp.data.forEach(day => {
-                    dateTable.push(day.Date);
-                    casesTable.push(day.Cases);
-                });
+                if (complicatedCountries.findIndex(item => item === resp.data[0].Country) > -1) {
+                    dataTable.innerHTML = '<h1 class="missing__data">This data will be available soon</h1><br><h2 class="missing__data">Error printing graph</h2>';
+                    tableTitles.innerHTML = '';
+                } else {
+                    let dateTable = [];
+                    let casesTable = [];
+                    resp.data.forEach(day => {
+                        dateTable.push(day.Date);
+                        casesTable.push(day.Cases);
+                    });
 
-                dataTable.innerHTML = '';
+                    dataTable.innerHTML = '';
 
-                var trace1 = {
-                    x: dateTable,
-                    y: casesTable,
-                    mode: 'lines',
-                    type: 'scatter',
-                    name: `${curCountry}`
-                };
+                    var trace1 = {
+                        x: dateTable,
+                        y: casesTable,
+                        mode: 'lines',
+                        type: 'scatter',
+                        name: `${curCountry}`
+                    };
 
-                var data = [trace1];
+                    var data = [trace1];
 
-                var layout = {
-                    xaxis: {
-                        type: 'date',
-                        title: 'Date'
-                    },
-                    yaxis: {
-                        title: 'Total Cases'
-                    },
-                    title: `Total number of Covid-19 Cases in ${curCountry}`
-                };
+                    var layout = {
+                        font: {
+                            family: 'Courier New, monospace',
+                            size: 18,
+                            color: 'white'
+                        },
+                        plot_bgcolor: "#d3d3d3",
+                        paper_bgcolor: "#089595",
+                        xaxis: {
+                            type: 'date',
+                            title: 'Date'
+                        },
+                        yaxis: {
+                            title: 'Total Cases'
+                        },
+                        title: `Total number of Covid-19 Cases in ${resp.data[0].Country}`
+                    };
 
-                Plotly.newPlot('myDiv', data, layout, { showSendToCloud: true });
+                    Plotly.newPlot('myDiv', data, layout, { showSendToCloud: true });
+                }
             }).catch(error => {
                 console.log(error);
             });
@@ -207,41 +263,53 @@ submitBtn.addEventListener('click', (e) => {
     if (selectElem.value === 'deathDay') {
         axios(`https://api.covid19api.com/dayone/country/${curCountry.toLowerCase()}/status/deaths`)
             .then(resp => {
-                console.log(resp.data);
-                let dateTable = [];
-                let casesTable = [];
-                resp.data.forEach((day, index, array) => {
-                    dateTable.push(day.Date);
-                    if (index > 0) {
-                        casesTable.push(array[`${index}`].Cases - array[`${index - 1}`].Cases);
-                    } else {
-                        casesTable.push(day.Cases);
-                    }
-                });
+                if (complicatedCountries.findIndex(item => item === resp.data[0].Country) > -1) {
+                    dataTable.innerHTML = '<h1 class="missing__data">This data will be available soon</h1><br><h2 class="missing__data">Error printing graph</h2>';
+                    tableTitles.innerHTML = '';
+                } else {
+                    let dateTable = [];
+                    let casesTable = [];
+                    resp.data.forEach((day, index, array) => {
+                        dateTable.push(day.Date);
+                        if (index > 0) {
+                            casesTable.push(array[`${index}`].Cases - array[`${index - 1}`].Cases);
+                        } else {
+                            casesTable.push(day.Cases);
+                        }
+                    });
 
-                dataTable.innerHTML = '';
+                    dataTable.innerHTML = '';
 
-                var trace1 = {
-                    x: dateTable,
-                    y: casesTable,
-                    type: 'bar',
-                    name: `${curCountry}`
-                };
+                    var trace1 = {
+                        x: dateTable,
+                        y: casesTable,
+                        type: 'bar',
+                        name: `${curCountry}`
+                    };
 
-                var data = [trace1];
+                    var data = [trace1];
 
-                var layout = {
-                    xaxis: {
-                        type: 'date',
-                        title: 'Date'
-                    },
-                    yaxis: {
-                        title: 'Number of deaths'
-                    },
-                    title: `Number of new Covid-19 Deaths per day ${curCountry}`
-                };
+                    var layout = {
+                        font: {
+                            family: 'Courier New, monospace',
+                            size: 18,
+                            color: 'white'
+                        },
+                        plot_bgcolor: "#d3d3d3",
+                        paper_bgcolor: "#089595",
+                        xaxis: {
+                            type: 'date',
+                            title: 'Date'
+                        },
+                        yaxis: {
+                            title: 'Number of deaths'
+                        },
+                        title: `Number of new Covid-19 Deaths per day ${resp.data[0].Country}`
+                    };
 
-                Plotly.newPlot('myDiv', data, layout, { showSendToCloud: true });
+                    Plotly.newPlot('myDiv', data, layout, { showSendToCloud: true });
+                }
+
             }).catch(error => {
                 console.log(error);
             });
@@ -250,43 +318,200 @@ submitBtn.addEventListener('click', (e) => {
     if (selectElem.value === 'casesDay') {
         axios(`https://api.covid19api.com/dayone/country/${curCountry.toLowerCase()}/status/confirmed`)
             .then(resp => {
-                console.log(resp.data);
-                let dateTable = [];
-                let casesTable = [];
-                resp.data.forEach((day, index, array) => {
-                    dateTable.push(day.Date);
-                    if (index > 0) {
-                        casesTable.push(array[`${index}`].Cases - array[`${index - 1}`].Cases);
-                    } else {
-                        casesTable.push(day.Cases);
-                    }
-                });
+                if (complicatedCountries.findIndex(item => item === resp.data[0].Country) > -1) {
+                    dataTable.innerHTML = '<h1 class="missing__data">This data will be available soon</h1><br><h2 class="missing__data">Error printing graph</h2>';
+                    tableTitles.innerHTML = '';
+                } else {
+                    let dateTable = [];
+                    let casesTable = [];
+                    resp.data.forEach((day, index, array) => {
+                        dateTable.push(day.Date);
+                        if (index > 0) {
+                            casesTable.push(array[`${index}`].Cases - array[`${index - 1}`].Cases);
+                        } else {
+                            casesTable.push(day.Cases);
+                        }
+                    });
 
-                dataTable.innerHTML = '';
+                    dataTable.innerHTML = '';
 
-                var trace1 = {
-                    x: dateTable,
-                    y: casesTable,
-                    type: 'bar',
-                    name: `${curCountry}`
-                };
+                    var trace1 = {
+                        x: dateTable,
+                        y: casesTable,
+                        type: 'bar',
+                        name: `${curCountry}`
+                    };
 
-                var data = [trace1];
+                    var data = [trace1];
 
-                var layout = {
-                    xaxis: {
-                        type: 'date',
-                        title: 'Date'
-                    },
-                    yaxis: {
-                        title: 'Number of Cases'
-                    },
-                    title: `Number of new Covid-19 Cases per day ${curCountry}`
-                };
+                    var layout = {
+                        font: {
+                            family: 'Courier New, monospace',
+                            size: 18,
+                            color: 'white'
+                        },
+                        plot_bgcolor: "#d3d3d3",
+                        paper_bgcolor: "#089595",
+                        xaxis: {
+                            type: 'date',
+                            title: 'Date'
+                        },
+                        yaxis: {
+                            title: 'Number of Cases'
+                        },
+                        title: `Number of new Covid-19 Cases per day in ${resp.data[0].Country}`
+                    };
 
-                Plotly.newPlot('myDiv', data, layout, { showSendToCloud: true });
+                    Plotly.newPlot('myDiv', data, layout, { showSendToCloud: true });
+                }
             }).catch(error => {
                 console.log(error);
+            });
+    }
+
+
+    if (selectElem.value === 'casesDeathsGraph') {
+        axios(`https://api.covid19api.com/country/${curCountry.toLowerCase()}/status/deaths`)
+            .then(resp => {
+                axios(`https://api.covid19api.com/country/${curCountry.toLowerCase()}/status/confirmed`)
+                    .then(resp2 => {
+                        if (complicatedCountries.findIndex(item => item === resp.data[0].Country) > -1) {
+                            dataTable.innerHTML = '<h1 class="missing__data">This data will be available soon</h1><br><h2 class="missing__data">Error printing graph</h2>';
+                            tableTitles.innerHTML = '';
+                        } else {
+                            let dateTable = [];
+                            let casesTable = [];
+                            resp.data.forEach(day => {
+                                dateTable.push(day.Date);
+                                casesTable.push(day.Cases);
+                            });
+
+                            let dateTable2 = [];
+                            let casesTable2 = [];
+                            resp2.data.forEach(day => {
+                                dateTable2.push(day.Date);
+                                casesTable2.push(day.Cases);
+                            });
+
+                            dataTable.innerHTML = '';
+
+                            var trace1 = {
+                                x: dateTable,
+                                y: casesTable,
+                                mode: 'lines',
+                                type: 'scatter',
+                                name: `Deaths`
+                            };
+
+                            var trace2 = {
+                                x: dateTable2,
+                                y: casesTable2,
+                                mode: 'lines',
+                                type: 'scatter',
+                                name: `Cases`
+                            };
+
+                            var data = [trace1, trace2];
+
+                            var layout = {
+                                font: {
+                                    family: 'Courier New, monospace',
+                                    size: 18,
+                                    color: 'white'
+                                },
+                                plot_bgcolor: "#d3d3d3",
+                                paper_bgcolor: "#089595",
+                                xaxis: {
+                                    type: 'date',
+                                    title: 'Date'
+                                },
+                                yaxis: {
+                                    title: 'Total Deaths'
+                                },
+                                title: `Total number of Covid-19 deaths/cases in ${resp.data[0].Country}`
+                            };
+
+                            Plotly.newPlot('myDiv', data, layout, { showSendToCloud: true });
+                        }
+                    })
+            }).catch(error => {
+                console.log(error);
+            });
+    }
+
+
+    if (selectElem.value === 'casesDeathsDay') {
+        axios(`https://api.covid19api.com/dayone/country/${curCountry.toLowerCase()}/status/deaths`)
+            .then(resp => {
+                axios(`https://api.covid19api.com/dayone/country/${curCountry.toLowerCase()}/status/confirmed`)
+                    .then(resp2 => {
+                        if (complicatedCountries.findIndex(item => item === resp.data[0].Country) > -1) {
+                            dataTable.innerHTML = '<h1 class="missing__data">This data will be available soon</h1><br><h2 class="missing__data">Error printing graph</h2>';
+                            tableTitles.innerHTML = '';
+                        } else {
+                            let dateTable = [];
+                            let casesTable = [];
+                            resp.data.forEach((day, index, array) => {
+                                dateTable.push(day.Date);
+                                if (index > 0) {
+                                    casesTable.push(array[`${index}`].Cases - array[`${index - 1}`].Cases);
+                                } else {
+                                    casesTable.push(day.Cases);
+                                }
+                            });
+
+                            let dateTable2 = [];
+                            let casesTable2 = [];
+                            resp2.data.forEach((day, index, array) => {
+                                dateTable2.push(day.Date);
+                                if (index > 0) {
+                                    casesTable2.push(array[`${index}`].Cases - array[`${index - 1}`].Cases);
+                                } else {
+                                    casesTable2.push(day.Cases);
+                                }
+                            });
+
+                            dataTable.innerHTML = '';
+
+                            var trace1 = {
+                                x: dateTable,
+                                y: casesTable,
+                                type: 'bar',
+                                name: `Deaths`
+                            };
+
+                            var trace2 = {
+                                x: dateTable2,
+                                y: casesTable2,
+                                type: 'bar',
+                                name: `Cases`
+                            };
+
+                            var data = [trace1, trace2];
+
+                            var layout = {
+                                font: {
+                                    family: 'Courier New, monospace',
+                                    size: 18,
+                                    color: 'white'
+                                },
+                                plot_bgcolor: "#d3d3d3",
+                                paper_bgcolor: "#089595",
+                                xaxis: {
+                                    type: 'date',
+                                    title: 'Date'
+                                },
+                                yaxis: {
+                                    title: 'Number of deaths'
+                                },
+                                title: `Number of new Covid-19 Deaths/Cases per day in ${resp.data[0].Country}`
+                            };
+
+                            Plotly.newPlot('myDiv', data, layout, { showSendToCloud: true });
+                        }
+                    }).catch(error => {
+                        console.log(error);
+                    });
             });
     }
 });

@@ -5,12 +5,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
+    <script type="text/javascript" src="worldpopulation.json"></script>
     <title>Covid-19</title>
 </head>
 
 <body>
     <h1 class="main__header">Welcome to my unofficial site of Covid-19 data</h1>
-    <h2 class="secondary__header">Use the search bar and the dropdown menu below to display current information or
+    <h2 class="secondary__header">Use the dropdown menus below to display current information or
         graphs
         for the country of your choice</h2>
     <h3>All data are mined from <a href="https://coronavirus.jhu.edu/">Johns Hopkins Coronavirus Resource Center</a> in
@@ -23,10 +24,12 @@
         <select name="data" id="data-select">
             <option value="">--Please choose an option--</option>
             <option value="summary">Summary</option>
-            <option value="deathGraph">Death Graph - Accum</option>
-            <option value="casesGraph">Cases Graph - Accum</option>
+            <option value="deathGraph">Death Graph - Total</option>
+            <option value="casesGraph">Cases Graph - Total</option>
             <option value="deathDay">Death Graph by day</option>
             <option value="casesDay">Cases Graph by day</option>
+            <option value="casesDeathsGraph">Cases/Deaths Graph Total</option>
+            <option value="casesDeathsDay">Cases/Deaths Graph by day</option>
         </select>
         <br>
         <input type="submit">
@@ -36,8 +39,8 @@
     <div class="main__container">
         <table>
             <thead>
-                <tr>
-                    <th colspan="7" id="table__title">Data by Country</th>
+                <tr id="table__titles">
+
                 </tr>
             </thead>
             <tbody id="data__table">
