@@ -30,6 +30,12 @@
             <option value="casesDay">Cases Graph by day</option>
             <option value="casesDeathsGraph">Cases/Deaths Graph Total</option>
             <option value="casesDeathsDay">Cases/Deaths Graph by day</option>
+            <option value="compareDeath">Comparison Mode Deaths by date</option>
+            <option value="compareCases">Comparison Mode Cases by date</option>
+            <option value="compareDeath0">Comparison Mode Deaths by Day-0</option>
+            <option value="compareCases0">Comparison Mode Cases by Day-0</option>
+            <option value="compareDeath10">Comparison Mode Deaths after 10th case</option>
+            <option value="compareCases10">Comparison Mode Cases after 10th case</option>
         </select>
         <br>
         <input type="submit">
@@ -37,6 +43,9 @@
     <hr>
     <!-- <h2 class="error">{{covidText}}</h2> -->
     <div class="main__container">
+        <div id="spinner" class="spinner">
+            <img class="loader__image" src="./virus.png" alt="Virus Loader">
+        </div>
         <table>
             <thead>
                 <tr id="table__titles">

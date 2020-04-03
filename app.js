@@ -16,9 +16,10 @@ const dataTable = document.getElementById('data__table');
 const selectCountry = document.getElementById('country-select');
 const graphDiv = document.getElementById('myDiv');
 const tableTitles = document.getElementById('table__titles');
+const spinner = document.getElementById('spinner');
 
 const complicatedCountries = ['australia', 'canada', 'china', 'france', 'germany', 'netherlands', 'united-kingdom', 'us'];
-const doubleCountries = ['Iran (Islamic Republic of)', 'Korea, South', 'Republic of Korea', 'Russian Federation', 'Taiwan*', 'Bahamas, The', '', 'Others'];
+const doubleCountries = ['Iran (Islamic Republic of)', 'Korea, South', 'Republic of Korea', 'Russian Federation', 'Taiwan*', 'Bahamas, The', '', 'Others', 'Republic of the Congo', 'Cape Verde', 'The Bahamas'];
 
 axios(`https://api.covid19api.com/countries`)
     .then(resp => {
@@ -51,21 +52,23 @@ axios(`https://api.covid19api.com/summary`)
         let worldRecovered = 0;
         let worldNewRecovered = 0;
         countriesDescDeath.forEach(country => {
-            worldTotDeaths += country.TotalDeaths;
-            worldNewDeaths += country.NewDeaths;
-            worldTotCases += country.TotalConfirmed;
-            worldNewCases += country.NewConfirmed;
-            worldRecovered += country.TotalRecovered;
-            worldNewRecovered += country.NewRecovered;
+            if (doubleCountries.findIndex(item => item === country.Country) === -1) {
+                worldTotDeaths += country.TotalDeaths;
+                worldNewDeaths += country.NewDeaths;
+                worldTotCases += country.TotalConfirmed;
+                worldNewCases += country.NewConfirmed;
+                worldRecovered += country.TotalRecovered;
+                worldNewRecovered += country.NewRecovered;
+            }
         })
         tableTitles.innerHTML = `<th>Country Name</th>
-        <th>TotalDeaths</th>
-        <th>NewDeaths</th>
+        <th>Total Deaths</th>
+        <th>New Deaths</th>
         <th>Total Cases</th>
         <th>New Cases</th>
         <th>Total Recovered</th>
         <th>New Recovered</th>
-        <th>TotalDeaths/1M</th>`
+        <th>TotalDeaths /1M</th>`
         let output = `<tr>
         <td>World</td>
         <td>${worldTotDeaths}</td>
@@ -97,11 +100,13 @@ axios(`https://api.covid19api.com/summary`)
             }
         })
         dataTable.innerHTML = output;
+        spinner.classList.toggle("hide__spinner");
     }).catch(error => {
         console.log(error);
     });
 
 submitBtn.addEventListener('click', (e) => {
+    spinner.classList.toggle("hide__spinner");
     e.preventDefault();
     const curCountry = selectCountry.value;
 
@@ -156,7 +161,7 @@ submitBtn.addEventListener('click', (e) => {
                     }
                 });
                 dataTable.innerHTML = output;
-
+                spinner.classList.toggle("hide__spinner");
             }).catch(error => {
                 console.log(error);
             });
@@ -167,9 +172,13 @@ submitBtn.addEventListener('click', (e) => {
             .then(resp => {
                 tableTitles.innerHTML = '';
                 if (complicatedCountries.findIndex(item => item === curCountry) > -1) {
+                    graphDiv.innerHTML = '';
                     dataTable.innerHTML = '<h1 class="missing__data">This data will be available soon</h1><br><h2 class="missing__data">Error printing graph</h2>';
+                    spinner.classList.toggle("hide__spinner");
                 } else if (resp.data[resp.data.length - 1].Cases === 0) {
+                    graphDiv.innerHTML = '';
                     dataTable.innerHTML = '<h1 class="missing__data">There is not a single case at the moment</h1><br><h2 class="missing__data">Luckily we cannot make a graph yet</h2>';
+                    spinner.classList.toggle("hide__spinner");
                 } else {
                     let dateTable = [];
                     let casesTable = [];
@@ -209,6 +218,7 @@ submitBtn.addEventListener('click', (e) => {
                     };
 
                     Plotly.newPlot('myDiv', data, layout, { showSendToCloud: true });
+                    spinner.classList.toggle("hide__spinner");
                 }
             }).catch(error => {
                 console.log(error);
@@ -220,9 +230,13 @@ submitBtn.addEventListener('click', (e) => {
             .then(resp => {
                 tableTitles.innerHTML = '';
                 if (complicatedCountries.findIndex(item => item === curCountry) > -1) {
+                    graphDiv.innerHTML = '';
                     dataTable.innerHTML = '<h1 class="missing__data">This data will be available soon</h1><br><h2 class="missing__data">Error printing graph</h2>';
+                    spinner.classList.toggle("hide__spinner");
                 } else if (resp.data[resp.data.length - 1].Cases === 0) {
+                    graphDiv.innerHTML = '';
                     dataTable.innerHTML = '<h1 class="missing__data">There is not a single case at the moment</h1><br><h2 class="missing__data">Luckily we cannot make a graph yet</h2>';
+                    spinner.classList.toggle("hide__spinner");
                 } else {
                     let dateTable = [];
                     let casesTable = [];
@@ -262,6 +276,7 @@ submitBtn.addEventListener('click', (e) => {
                     };
 
                     Plotly.newPlot('myDiv', data, layout, { showSendToCloud: true });
+                    spinner.classList.toggle("hide__spinner");
                 }
             }).catch(error => {
                 console.log(error);
@@ -273,9 +288,13 @@ submitBtn.addEventListener('click', (e) => {
             .then(resp => {
                 tableTitles.innerHTML = '';
                 if (complicatedCountries.findIndex(item => item === curCountry) > -1) {
+                    graphDiv.innerHTML = '';
                     dataTable.innerHTML = '<h1 class="missing__data">This data will be available soon</h1><br><h2 class="missing__data">Error printing graph</h2>';
+                    spinner.classList.toggle("hide__spinner");
                 } else if (resp.data[resp.data.length - 1].Cases === 0) {
+                    graphDiv.innerHTML = '';
                     dataTable.innerHTML = '<h1 class="missing__data">There is not a single case at the moment</h1><br><h2 class="missing__data">Luckily we cannot make a graph yet</h2>';
+                    spinner.classList.toggle("hide__spinner");
                 } else {
                     let dateTable = [];
                     let casesTable = [];
@@ -318,6 +337,7 @@ submitBtn.addEventListener('click', (e) => {
                     };
 
                     Plotly.newPlot('myDiv', data, layout, { showSendToCloud: true });
+                    spinner.classList.toggle("hide__spinner");
                 }
 
             }).catch(error => {
@@ -330,9 +350,13 @@ submitBtn.addEventListener('click', (e) => {
             .then(resp => {
                 tableTitles.innerHTML = '';
                 if (complicatedCountries.findIndex(item => item === curCountry) > -1) {
+                    graphDiv.innerHTML = '';
                     dataTable.innerHTML = '<h1 class="missing__data">This data will be available soon</h1><br><h2 class="missing__data">Error printing graph</h2>';
+                    spinner.classList.toggle("hide__spinner");
                 } else if (resp.data[resp.data.length - 1].Cases === 0) {
+                    graphDiv.innerHTML = '';
                     dataTable.innerHTML = '<h1 class="missing__data">There is not a single case at the moment</h1><br><h2 class="missing__data">Luckily we cannot make a graph yet</h2>';
+                    spinner.classList.toggle("hide__spinner");
                 } else {
                     let dateTable = [];
                     let casesTable = [];
@@ -375,6 +399,7 @@ submitBtn.addEventListener('click', (e) => {
                     };
 
                     Plotly.newPlot('myDiv', data, layout, { showSendToCloud: true });
+                    spinner.classList.toggle("hide__spinner");
                 }
             }).catch(error => {
                 console.log(error);
@@ -389,9 +414,13 @@ submitBtn.addEventListener('click', (e) => {
                     .then(resp2 => {
                         tableTitles.innerHTML = '';
                         if (complicatedCountries.findIndex(item => item === curCountry) > -1) {
+                            graphDiv.innerHTML = '';
                             dataTable.innerHTML = '<h1 class="missing__data">This data will be available soon</h1><br><h2 class="missing__data">Error printing graph</h2>';
+                            spinner.classList.toggle("hide__spinner");
                         } else if (resp.data[resp.data.length - 1].Cases === 0) {
+                            graphDiv.innerHTML = '';
                             dataTable.innerHTML = '<h1 class="missing__data">There is not a single case at the moment</h1><br><h2 class="missing__data">Luckily we cannot make a graph yet</h2>';
+                            spinner.classList.toggle("hide__spinner");
                         } else {
                             let dateTable = [];
                             let casesTable = [];
@@ -446,6 +475,7 @@ submitBtn.addEventListener('click', (e) => {
                             };
 
                             Plotly.newPlot('myDiv', data, layout, { showSendToCloud: true });
+                            spinner.classList.toggle("hide__spinner");
                         }
                     })
             }).catch(error => {
@@ -461,9 +491,13 @@ submitBtn.addEventListener('click', (e) => {
                     .then(resp2 => {
                         tableTitles.innerHTML = '';
                         if (complicatedCountries.findIndex(item => item === curCountry) > -1) {
+                            graphDiv.innerHTML = '';
                             dataTable.innerHTML = '<h1 class="missing__data">This data will be available soon</h1><br><h2 class="missing__data">Error printing graph</h2>';
+                            spinner.classList.toggle("hide__spinner");
                         } else if (resp.data[resp.data.length - 1].Cases === 0) {
+                            graphDiv.innerHTML = '';
                             dataTable.innerHTML = '<h1 class="missing__data">There is not a single case at the moment</h1><br><h2 class="missing__data">Luckily we cannot make a graph yet</h2>';
+                            spinner.classList.toggle("hide__spinner");
                         } else {
                             let dateTable = [];
                             let casesTable = [];
@@ -524,10 +558,363 @@ submitBtn.addEventListener('click', (e) => {
                             };
 
                             Plotly.newPlot('myDiv', data, layout, { showSendToCloud: true });
+                            spinner.classList.toggle("hide__spinner");
                         }
                     }).catch(error => {
                         console.log(error);
                     });
+            });
+    }
+
+    if (selectElem.value === 'compareDeath') {
+        axios(`https://api.covid19api.com/country/${curCountry.toLowerCase()}/status/deaths`)
+            .then(resp => {
+                tableTitles.innerHTML = '';
+                if (complicatedCountries.findIndex(item => item === curCountry) > -1) {
+                    dataTable.innerHTML = '<h1 class="missing__data">This data will be available soon</h1><br><h2 class="missing__data">Error printing graph</h2>';
+                    spinner.classList.toggle("hide__spinner");
+                } else if (resp.data[resp.data.length - 1].Cases === 0) {
+                    dataTable.innerHTML = '<h1 class="missing__data">There is not a single case at the moment</h1><br><h2 class="missing__data">Luckily we cannot make a graph yet</h2>';
+                    spinner.classList.toggle("hide__spinner");
+                } else {
+                    let dateTable = [];
+                    let casesTable = [];
+                    resp.data.forEach(day => {
+                        dateTable.push(day.Date);
+                        casesTable.push(day.Cases);
+                    });
+
+                    dataTable.innerHTML = '';
+
+                    var trace1 = {
+                        x: dateTable,
+                        y: casesTable,
+                        mode: 'lines',
+                        type: 'scatter',
+                        name: `${curCountry}`
+                    };
+
+                    var data = [trace1];
+
+                    var layout = {
+                        font: {
+                            family: 'Courier New, monospace',
+                            size: 18,
+                            color: 'white'
+                        },
+                        plot_bgcolor: "#d3d3d3",
+                        paper_bgcolor: "#089595",
+                        xaxis: {
+                            type: 'date',
+                            title: 'Date'
+                        },
+                        yaxis: {
+                            title: 'Total Deaths'
+                        },
+                        title: `Total number of Covid-19 deaths comparison`
+                    };
+
+                    Plotly.plot('myDiv', data, layout, { showSendToCloud: true });
+                    spinner.classList.toggle("hide__spinner");
+                }
+            }).catch(error => {
+                console.log(error);
+            });
+    }
+
+    if (selectElem.value === 'compareCases') {
+        axios(`https://api.covid19api.com/country/${curCountry.toLowerCase()}/status/deaths`)
+            .then(resp => {
+                tableTitles.innerHTML = '';
+                if (complicatedCountries.findIndex(item => item === curCountry) > -1) {
+                    dataTable.innerHTML = '<h1 class="missing__data">This data will be available soon</h1><br><h2 class="missing__data">Error printing graph</h2>';
+                    spinner.classList.toggle("hide__spinner");
+                } else if (resp.data[resp.data.length - 1].Cases === 0) {
+                    dataTable.innerHTML = '<h1 class="missing__data">There is not a single case at the moment</h1><br><h2 class="missing__data">Luckily we cannot make a graph yet</h2>';
+                    spinner.classList.toggle("hide__spinner");
+                } else {
+                    let dateTable = [];
+                    let casesTable = [];
+                    resp.data.forEach(day => {
+                        dateTable.push(day.Date);
+                        casesTable.push(day.Cases);
+                    });
+
+                    dataTable.innerHTML = '';
+
+                    var trace1 = {
+                        x: dateTable,
+                        y: casesTable,
+                        mode: 'lines',
+                        type: 'scatter',
+                        name: `${curCountry}`
+                    };
+
+                    var data = [trace1];
+
+                    var layout = {
+                        font: {
+                            family: 'Courier New, monospace',
+                            size: 18,
+                            color: 'white'
+                        },
+                        plot_bgcolor: "#d3d3d3",
+                        paper_bgcolor: "#089595",
+                        xaxis: {
+                            type: 'date',
+                            title: 'Date'
+                        },
+                        yaxis: {
+                            title: 'Total Cases'
+                        },
+                        title: `Total number of Covid-19 cases comparison`
+                    };
+
+                    Plotly.plot('myDiv', data, layout, { showSendToCloud: true });
+                    spinner.classList.toggle("hide__spinner");
+                }
+            }).catch(error => {
+                console.log(error);
+            });
+    }
+
+    if (selectElem.value === 'compareDeath0') {
+        axios(`https://api.covid19api.com/country/${curCountry.toLowerCase()}/status/deaths`)
+            .then(resp => {
+                tableTitles.innerHTML = '';
+                if (complicatedCountries.findIndex(item => item === curCountry) > -1) {
+                    dataTable.innerHTML = '<h1 class="missing__data">This data will be available soon</h1><br><h2 class="missing__data">Error printing graph</h2>';
+                    spinner.classList.toggle("hide__spinner");
+                } else if (resp.data[resp.data.length - 1].Cases === 0) {
+                    dataTable.innerHTML = '<h1 class="missing__data">There is not a single case at the moment</h1><br><h2 class="missing__data">Luckily we cannot make a graph yet</h2>';
+                    spinner.classList.toggle("hide__spinner");
+                } else {
+                    let dateTable = [];
+                    let casesTable = [];
+                    let startingPoint = 0;
+                    resp.data.forEach((day, index) => {
+                        if (day.Cases > 0) {
+                            dateTable.push(index - startingPoint);
+                            casesTable.push(day.Cases);
+                        } else {
+                            startingPoint++;
+                        }
+                    });
+
+                    dataTable.innerHTML = '';
+
+                    var trace1 = {
+                        x: dateTable,
+                        y: casesTable,
+                        mode: 'lines',
+                        type: 'scatter',
+                        name: `${curCountry}`
+                    };
+
+                    var data = [trace1];
+
+                    var layout = {
+                        font: {
+                            family: 'Courier New, monospace',
+                            size: 18,
+                            color: 'white'
+                        },
+                        plot_bgcolor: "#d3d3d3",
+                        paper_bgcolor: "#089595",
+                        xaxis: {
+                            title: 'Day'
+                        },
+                        yaxis: {
+                            title: 'Total Deaths'
+                        },
+                        title: `Total number of Covid-19 deaths comparison by Day-0`
+                    };
+
+                    Plotly.plot('myDiv', data, layout, { showSendToCloud: true });
+                    spinner.classList.toggle("hide__spinner");
+                }
+            }).catch(error => {
+                console.log(error);
+            });
+    }
+
+    if (selectElem.value === 'compareCases0') {
+        axios(`https://api.covid19api.com/country/${curCountry.toLowerCase()}/status/deaths`)
+            .then(resp => {
+                tableTitles.innerHTML = '';
+                if (complicatedCountries.findIndex(item => item === curCountry) > -1) {
+                    dataTable.innerHTML = '<h1 class="missing__data">This data will be available soon</h1><br><h2 class="missing__data">Error printing graph</h2>';
+                    spinner.classList.toggle("hide__spinner");
+                } else if (resp.data[resp.data.length - 1].Cases === 0) {
+                    dataTable.innerHTML = '<h1 class="missing__data">There is not a single case at the moment</h1><br><h2 class="missing__data">Luckily we cannot make a graph yet</h2>';
+                    spinner.classList.toggle("hide__spinner");
+                } else {
+                    let dateTable = [];
+                    let casesTable = [];
+                    let startingPoint = 0;
+                    resp.data.forEach((day, index) => {
+                        if (day.Cases > 0) {
+                            dateTable.push(index - startingPoint);
+                            casesTable.push(day.Cases);
+                        } else {
+                            startingPoint++;
+                        }
+                    });
+
+                    dataTable.innerHTML = '';
+
+                    var trace1 = {
+                        x: dateTable,
+                        y: casesTable,
+                        mode: 'lines',
+                        type: 'scatter',
+                        name: `${curCountry}`
+                    };
+
+                    var data = [trace1];
+
+                    var layout = {
+                        font: {
+                            family: 'Courier New, monospace',
+                            size: 18,
+                            color: 'white'
+                        },
+                        plot_bgcolor: "#d3d3d3",
+                        paper_bgcolor: "#089595",
+                        xaxis: {
+                            title: 'Day'
+                        },
+                        yaxis: {
+                            title: 'Total Cases'
+                        },
+                        title: `Total number of Covid-19 cases comparison by Day-0`
+                    };
+
+                    Plotly.plot('myDiv', data, layout, { showSendToCloud: true });
+                    spinner.classList.toggle("hide__spinner");
+                }
+            }).catch(error => {
+                console.log(error);
+            });
+    }
+
+    if (selectElem.value === 'compareDeath10') {
+        axios(`https://api.covid19api.com/country/${curCountry.toLowerCase()}/status/deaths`)
+            .then(resp => {
+                tableTitles.innerHTML = '';
+                if (complicatedCountries.findIndex(item => item === curCountry) > -1) {
+                    dataTable.innerHTML = '<h1 class="missing__data">This data will be available soon</h1><br><h2 class="missing__data">Error printing graph</h2>';
+                    spinner.classList.toggle("hide__spinner");
+                } else if (resp.data[resp.data.length - 1].Cases === 0) {
+                    dataTable.innerHTML = '<h1 class="missing__data">There is not a single case at the moment</h1><br><h2 class="missing__data">Luckily we cannot make a graph yet</h2>';
+                    spinner.classList.toggle("hide__spinner");
+                } else {
+                    let dateTable = [];
+                    let casesTable = [];
+                    let startingPoint = 0;
+                    resp.data.forEach((day, index) => {
+                        if (day.Cases > 9) {
+                            dateTable.push(index - startingPoint);
+                            casesTable.push(day.Cases);
+                        } else {
+                            startingPoint++;
+                        }
+                    });
+
+                    dataTable.innerHTML = '';
+
+                    var trace1 = {
+                        x: dateTable,
+                        y: casesTable,
+                        mode: 'lines',
+                        type: 'scatter',
+                        name: `${curCountry}`
+                    };
+
+                    var data = [trace1];
+
+                    var layout = {
+                        font: {
+                            family: 'Courier New, monospace',
+                            size: 18,
+                            color: 'white'
+                        },
+                        plot_bgcolor: "#d3d3d3",
+                        paper_bgcolor: "#089595",
+                        xaxis: {
+                            title: 'Day'
+                        },
+                        yaxis: {
+                            title: 'Total Deaths'
+                        },
+                        title: `Total number of Covid-19 deaths comparison after 10th death`
+                    };
+
+                    Plotly.plot('myDiv', data, layout, { showSendToCloud: true });
+                    spinner.classList.toggle("hide__spinner");
+                }
+            }).catch(error => {
+                console.log(error);
+            });
+    }
+
+    if (selectElem.value === 'compareCases10') {
+        axios(`https://api.covid19api.com/country/${curCountry.toLowerCase()}/status/deaths`)
+            .then(resp => {
+                tableTitles.innerHTML = '';
+                if (complicatedCountries.findIndex(item => item === curCountry) > -1) {
+                    dataTable.innerHTML = '<h1 class="missing__data">This data will be available soon</h1><br><h2 class="missing__data">Error printing graph</h2>';
+                    spinner.classList.toggle("hide__spinner");
+                } else if (resp.data[resp.data.length - 1].Cases === 0) {
+                    dataTable.innerHTML = '<h1 class="missing__data">There is not a single case at the moment</h1><br><h2 class="missing__data">Luckily we cannot make a graph yet</h2>';
+                    spinner.classList.toggle("hide__spinner");
+                } else {
+                    let dateTable = [];
+                    let casesTable = [];
+                    let startingPoint = 0;
+                    resp.data.forEach((day, index) => {
+                        if (day.Cases > 9) {
+                            dateTable.push(index - startingPoint);
+                            casesTable.push(day.Cases);
+                        } else {
+                            startingPoint++;
+                        }
+                    });
+
+                    dataTable.innerHTML = '';
+
+                    var trace1 = {
+                        x: dateTable,
+                        y: casesTable,
+                        mode: 'lines',
+                        type: 'scatter',
+                        name: `${curCountry}`
+                    };
+
+                    var data = [trace1];
+
+                    var layout = {
+                        font: {
+                            family: 'Courier New, monospace',
+                            size: 18,
+                            color: 'white'
+                        },
+                        plot_bgcolor: "#d3d3d3",
+                        paper_bgcolor: "#089595",
+                        xaxis: {
+                            title: 'Day'
+                        },
+                        yaxis: {
+                            title: 'Total Cases'
+                        },
+                        title: `Total number of Covid-19 cases comparison after 10th case`
+                    };
+
+                    Plotly.plot('myDiv', data, layout, { showSendToCloud: true });
+                    spinner.classList.toggle("hide__spinner");
+                }
+            }).catch(error => {
+                console.log(error);
             });
     }
 });

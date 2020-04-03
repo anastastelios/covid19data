@@ -18,11 +18,11 @@ body {
     width: 100vw;
 }
 
-.container {
+.main__container {
     display: flex;
     flex-direction: column;
-    width: 100vw;
-    background-color: skyblue;
+    width: 97vw;
+    background-color: #196363;
 }
 
 .subcontainer2 {
@@ -157,4 +157,446 @@ th {
     text-align: center;
     background-color: cornsilk;
     color: #a52a2a
+}
+
+.spinner {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    border: 10px solid #A52A2A;
+    margin: 3% 40%;
+    position: relative;
+    left: 4vw;
+    z-index: 1;
+}
+
+.spinner:before {
+    content: '';
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    border-top: 10px solid #1F1710;
+    border-right: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-left: 10px solid transparent;
+    position: absolute;
+    z-index: 9;
+    top: -20px;
+    left: -20px;
+    animation: rt 2s infinite;
+}
+
+@keyframes rt {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.spinner>.fa {
+    font-size: 32px;
+    text-align: center;
+    display: block;
+    margin: 30% 0;
+}
+
+.loader__image {
+    width: 100px;
+    height: 100px;
+    text-align: center;
+}
+
+.hide__spinner {
+    display: none;
+}
+
+@media screen and (max-width: 900px) {
+    .data__container {
+        padding: 2rem;
+    }
+    h3 {
+        margin-top: 1rem;
+    }
+    .back__link {
+        width: 9%;
+        padding: 0.5rem;
+        font-size: 2rem;
+        border: 1px solid black;
+        background-color: #ccc;
+        border-radius: 5px;
+        text-decoration: none;
+    }
+    .main__header {
+        text-align: center;
+        background-color: #a52a2a;
+        color: white;
+        padding: 0.5rem;
+    }
+    .secondary__header {
+        background-color: #A5622A;
+        text-align: center;
+        padding: 0.5rem;
+        margin: 0rem;
+    }
+    form {
+        text-align: center;
+        margin: 1.3rem;
+    }
+    .error {
+        margin: 1.3rem;
+    }
+    input[type="text"] {
+        font-size: 1rem;
+        margin: 0 1rem;
+        border-radius: 8px;
+        border: none;
+        padding: 0.7rem;
+    }
+    input[type="submit"] {
+        font-size: 1rem;
+        margin: 1rem;
+        border-radius: 8px;
+        border: none;
+        cursor: pointer;
+        padding: 0.7rem;
+    }
+    select {
+        font-size: 1rem;
+        margin: 0.7rem;
+        border-radius: 8px;
+        border: none;
+        cursor: pointer;
+        padding: 0.7rem;
+    }
+    a {
+        text-decoration: none;
+        color: white;
+    }
+    td {
+        border: 1px solid black;
+        padding: 0.4rem;
+        text-align: right;
+        color: white;
+    }
+    table {
+        margin-top: 1.3rem;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    #table__title {
+        font-size: 1.3rem;
+    }
+    #myDiv {
+        margin-top: 2rem;
+    }
+    th {
+        padding: 0.4rem;
+        background-color: #A5622A;
+        color: white;
+        text-align: center;
+        position: sticky;
+        top: 0;
+    }
+    .missing__data {
+        padding: 0.5rem;
+        text-align: center;
+        background-color: cornsilk;
+        color: #a52a2a
+    }
+}
+
+@media screen and (max-width: 685px) {
+    body {
+        font-size: 0.75rem;
+    }
+    .data__container {
+        padding: 1.5rem;
+    }
+    h3 {
+        margin-top: 0.75rem;
+    }
+    .back__link {
+        width: 9%;
+        padding: 0.4rem;
+        font-size: 1.5rem;
+        border: 1px solid black;
+        background-color: #ccc;
+        border-radius: 5px;
+        text-decoration: none;
+    }
+    .main__header {
+        text-align: center;
+        background-color: #a52a2a;
+        color: white;
+        padding: 0.4rem;
+    }
+    .secondary__header {
+        background-color: #A5622A;
+        text-align: center;
+        padding: 0.4rem;
+        margin: 0rem;
+    }
+    form {
+        text-align: center;
+        margin: 1rem;
+    }
+    .error {
+        margin: 1rem;
+    }
+    input[type="text"] {
+        font-size: 0.75rem;
+        margin: 0 0.75rem;
+        border-radius: 8px;
+        border: none;
+        padding: 0.5rem;
+    }
+    input[type="submit"] {
+        font-size: 0.75rem;
+        margin: 0.75rem;
+        border-radius: 8px;
+        border: none;
+        cursor: pointer;
+        padding: 0.5rem;
+    }
+    select {
+        font-size: 0.75rem;
+        margin: 0.5rem;
+        border-radius: 8px;
+        border: none;
+        cursor: pointer;
+        padding: 0.5rem;
+    }
+    a {
+        text-decoration: none;
+        color: white;
+    }
+    td {
+        border: 0.75px solid black;
+        padding: 0.3rem;
+        text-align: right;
+        color: white;
+    }
+    table {
+        margin-top: 1rem;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    #table__title {
+        font-size: 1rem;
+    }
+    #myDiv {
+        margin-top: 1.5rem;
+    }
+    th {
+        padding: 0.3rem;
+        background-color: #A5622A;
+        color: white;
+        text-align: center;
+        position: sticky;
+        top: 0;
+    }
+    .missing__data {
+        padding: 0.3rem;
+        text-align: center;
+        background-color: cornsilk;
+        color: #a52a2a
+    }
+}
+
+@media screen and (max-width: 555px) {
+    body {
+        font-size: 0.5rem;
+    }
+    .data__container {
+        padding: 1rem;
+    }
+    h3 {
+        margin-top: 0.5rem;
+    }
+    .back__link {
+        width: 9%;
+        padding: 0.3rem;
+        font-size: 1rem;
+        border: 0.5px solid black;
+        background-color: #ccc;
+        border-radius: 5px;
+        text-decoration: none;
+    }
+    .main__header {
+        text-align: center;
+        background-color: #a52a2a;
+        color: white;
+        padding: 0.3rem;
+    }
+    .secondary__header {
+        background-color: #A5622A;
+        text-align: center;
+        padding: 0.3rem;
+        margin: 0rem;
+    }
+    form {
+        text-align: center;
+        margin: 0.7rem;
+    }
+    .error {
+        margin: 0.7rem;
+    }
+    input[type="text"] {
+        font-size: 0.5rem;
+        margin: 0 0.5rem;
+        border-radius: 5px;
+        border: none;
+        padding: 0.3rem;
+    }
+    input[type="submit"] {
+        font-size: 0.5rem;
+        margin: 0.5rem;
+        border-radius: 5px;
+        border: none;
+        cursor: pointer;
+        padding: 0.3rem;
+    }
+    select {
+        font-size: 0.5rem;
+        margin: 0.3rem;
+        border-radius: 5px;
+        border: none;
+        cursor: pointer;
+        padding: 0.3rem;
+    }
+    a {
+        text-decoration: none;
+        color: white;
+    }
+    td {
+        border: 0.5px solid black;
+        padding: 0.2rem;
+        text-align: right;
+        color: white;
+    }
+    table {
+        margin-top: 0.7rem;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    #table__title {
+        font-size: 0.7rem;
+    }
+    #myDiv {
+        margin-top: 1rem;
+    }
+    th {
+        padding: 0.2rem;
+        background-color: #A5622A;
+        color: white;
+        text-align: center;
+        position: sticky;
+        top: 0;
+    }
+    .missing__data {
+        padding: 0.2rem;
+        text-align: center;
+        background-color: cornsilk;
+        color: #a52a2a
+    }
+}
+
+@media screen and (max-width: 400px) {
+    body {
+        font-size: 0.3rem;
+    }
+    .data__container {
+        padding: 0.7rem;
+    }
+    h3 {
+        margin-top: 0.3rem;
+    }
+    .back__link {
+        width: 9%;
+        padding: 0.2rem;
+        font-size: 0.7rem;
+        border: 0.3px solid black;
+        background-color: #ccc;
+        border-radius: 5px;
+        text-decoration: none;
+    }
+    .main__header {
+        text-align: center;
+        background-color: #a52a2a;
+        color: white;
+        padding: 0.3rem;
+    }
+    .secondary__header {
+        background-color: #A5622A;
+        text-align: center;
+        padding: 0.25rem;
+        margin: 0rem;
+    }
+    form {
+        text-align: center;
+        margin: 0.5rem;
+    }
+    .error {
+        margin: 0.5rem;
+    }
+    input[type="text"] {
+        font-size: 0.4rem;
+        margin: 0 0.4rem;
+        border-radius: 5px;
+        border: none;
+        padding: 0.2rem;
+    }
+    input[type="submit"] {
+        font-size: 0.4rem;
+        margin: 0.4rem;
+        border-radius: 5px;
+        border: none;
+        cursor: pointer;
+        padding: 0.25rem;
+    }
+    select {
+        font-size: 0.4rem;
+        margin: 0.25rem;
+        border-radius: 5px;
+        border: none;
+        cursor: pointer;
+        padding: 0.25rem;
+    }
+    a {
+        text-decoration: none;
+        color: white;
+    }
+    td {
+        border: 0.4px solid black;
+        padding: 0.2rem;
+        text-align: right;
+        color: white;
+    }
+    table {
+        margin-top: 0.5rem;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    #table__title {
+        font-size: 0.5rem;
+    }
+    #myDiv {
+        margin-top: 0.7rem;
+    }
+    th {
+        padding: 0.2rem;
+        background-color: #A5622A;
+        color: white;
+        text-align: center;
+        position: sticky;
+        top: 0;
+    }
+    .missing__data {
+        padding: 0.2rem;
+        text-align: center;
+        background-color: cornsilk;
+        color: #a52a2a
+    }
 }
