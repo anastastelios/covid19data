@@ -10,53 +10,56 @@
 </head>
 
 <body>
-    <h1 class="main__header">Welcome to my unofficial site of Covid-19 data</h1>
-    <h2 class="secondary__header">Use the dropdown menus below to display current information or
-        graphs
-        for the country of your choice</h2>
-    <h3>All data are mined from <a href="https://coronavirus.jhu.edu/">Johns Hopkins Coronavirus Resource Center</a> in
-        real time.</h3>
-    <form>
-        <!-- <input type="text" name="countryName" placeholder="Please enter a country..."> -->
-        <select name="country" id="country-select">
+    <div class="container">
+        <h1 class="main__header">Welcome to my unofficial site of Covid-19 data</h1>
+        <h2 class="secondary__header">Use the dropdown menus below to display current information or
+            graphs
+            for the country of your choice</h2>
+        <h3>All data are mined from <a href="https://coronavirus.jhu.edu/">Johns Hopkins Coronavirus Resource Center</a>
+            in
+            real time.</h3>
+        <form>
+            <!-- <input type="text" name="countryName" placeholder="Please enter a country..."> -->
+            <select name="country" id="country-select">
 
-        </select>
-        <select name="data" id="data-select">
-            <option value="">--Please choose an option--</option>
-            <option value="summary">Summary</option>
-            <option value="deathGraph">Death Graph - Total</option>
-            <option value="casesGraph">Cases Graph - Total</option>
-            <option value="deathDay">Death Graph by day</option>
-            <option value="casesDay">Cases Graph by day</option>
-            <option value="casesDeathsGraph">Cases/Deaths Graph Total</option>
-            <option value="casesDeathsDay">Cases/Deaths Graph by day</option>
-            <option value="compareDeath">Comparison Mode Deaths by date</option>
-            <option value="compareCases">Comparison Mode Cases by date</option>
-            <option value="compareDeath0">Comparison Mode Deaths by Day-0</option>
-            <option value="compareCases0">Comparison Mode Cases by Day-0</option>
-            <option value="compareDeath10">Comparison Mode Deaths after 10th case</option>
-            <option value="compareCases10">Comparison Mode Cases after 10th case</option>
-        </select>
-        <br>
-        <input type="submit">
-    </form>
-    <hr>
-    <!-- <h2 class="error">{{covidText}}</h2> -->
-    <div class="main__container">
-        <div id="spinner" class="spinner">
-            <img class="loader__image" src="./virus.png" alt="Virus Loader">
+            </select>
+            <select name="data" id="data-select">
+                <option value="">--Please choose an option--</option>
+                <option value="summary">Summary</option>
+                <option value="deathGraph">Death Graph - Total</option>
+                <option value="casesGraph">Cases Graph - Total</option>
+                <option value="deathDay">Death Graph by day</option>
+                <option value="casesDay">Cases Graph by day</option>
+                <option value="casesDeathsGraph">Cases/Deaths Graph Total</option>
+                <option value="casesDeathsDay">Cases/Deaths Graph by day</option>
+                <option value="compareDeath">Comparison Mode Deaths by date</option>
+                <option value="compareCases">Comparison Mode Cases by date</option>
+                <option value="compareDeath0">Comparison Mode Deaths by Day-0</option>
+                <option value="compareCases0">Comparison Mode Cases by Day-0</option>
+                <option value="compareDeath10">Comparison Mode Deaths after 10th case</option>
+                <option value="compareCases10">Comparison Mode Cases after 10th case</option>
+            </select>
+            <br>
+            <input type="submit">
+        </form>
+        <hr>
+        <!-- <h2 class="error">{{covidText}}</h2> -->
+        <div class="main__container">
+            <div id="spinner" class="spinner">
+                <img class="loader__image" src="./virus.png" alt="Virus Loader">
+            </div>
+            <table>
+                <thead>
+                    <tr id="table__titles">
+
+                    </tr>
+                </thead>
+                <tbody id="data__table">
+
+                </tbody>
+            </table>
+            <div id="myDiv" style="width:100%;height:600px;"></div>
         </div>
-        <table>
-            <thead>
-                <tr id="table__titles">
-
-                </tr>
-            </thead>
-            <tbody id="data__table">
-
-            </tbody>
-        </table>
-        <div id="myDiv" style="width:100%;height:600px;"></div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>

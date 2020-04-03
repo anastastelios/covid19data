@@ -18,10 +18,14 @@ body {
     width: 100vw;
 }
 
+.container {
+    width: 100vw;
+}
+
 .main__container {
     display: flex;
     flex-direction: column;
-    width: 97vw;
+    width: 98%;
     background-color: #196363;
 }
 
@@ -140,6 +144,7 @@ table {
 }
 
 #myDiv {
+    width: 100%;
     margin-top: 3rem;
 }
 
