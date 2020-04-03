@@ -191,6 +191,14 @@ th {
     animation: rt 2s infinite;
 }
 
+#comparison__details {
+    color: white;
+}
+
+#comparison__details:hover {
+    cursor: pointer;
+}
+
 @keyframes rt {
     from {
         transform: rotate(0deg);
