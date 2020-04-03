@@ -103,7 +103,7 @@ input[type="text"] {
     padding: 1rem;
 }
 
-input[type="submit"] {
+button[type="submit"] {
     font-size: 1.5rem;
     margin: 1rem;
     border-radius: 8px;
@@ -192,10 +192,20 @@ th {
 }
 
 #comparison__details {
-    color: white;
+    color: #ccc;
 }
 
 #comparison__details:hover {
+    cursor: pointer;
+}
+
+#about {
+    margin-bottom: 2rem;
+    text-align: center;
+    color: white;
+}
+
+#about:hover {
     cursor: pointer;
 }
 
@@ -267,7 +277,7 @@ th {
         border: none;
         padding: 0.7rem;
     }
-    input[type="submit"] {
+    button[type="submit"] {
         font-size: 1rem;
         margin: 1rem;
         border-radius: 8px;
@@ -365,7 +375,7 @@ th {
         border: none;
         padding: 0.5rem;
     }
-    input[type="submit"] {
+    button[type="submit"] {
         font-size: 0.75rem;
         margin: 0.75rem;
         border-radius: 8px;
@@ -463,7 +473,7 @@ th {
         border: none;
         padding: 0.3rem;
     }
-    input[type="submit"] {
+    button[type="submit"] {
         font-size: 0.5rem;
         margin: 0.5rem;
         border-radius: 5px;
@@ -561,7 +571,7 @@ th {
         border: none;
         padding: 0.2rem;
     }
-    input[type="submit"] {
+    button[type="submit"] {
         font-size: 0.4rem;
         margin: 0.4rem;
         border-radius: 5px;

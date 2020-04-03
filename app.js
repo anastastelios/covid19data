@@ -9,7 +9,7 @@ fetch('./worldpopulation.json')
     })
     .catch(err => console.error(err));
 
-const submitBtn = document.querySelector('input[type="submit"]');
+const submitBtn = document.querySelector('button[type="submit"]');
 const selectElem = document.getElementById('data-select');
 const countryInput = document.querySelector('input[name="countryName"]');
 const dataTable = document.getElementById('data__table');
@@ -18,6 +18,7 @@ const graphDiv = document.getElementById('myDiv');
 const tableTitles = document.getElementById('table__titles');
 const spinner = document.getElementById('spinner');
 const comparisonDetails = document.getElementById('comparison__details');
+const about = document.getElementById('about');
 
 const complicatedCountries = ['australia', 'canada', 'china', 'france', 'germany', 'netherlands', 'united-kingdom', 'us'];
 const doubleCountries = ['Iran (Islamic Republic of)', 'Korea, South', 'Republic of Korea', 'Russian Federation', 'Taiwan*', 'Bahamas, The', '', 'Others', 'Republic of the Congo', 'Cape Verde', 'The Bahamas'];
@@ -920,5 +921,10 @@ submitBtn.addEventListener('click', (e) => {
 });
 
 comparisonDetails.addEventListener('click', e => {
-    alert(`To perform comparisons choose one of the comparison modes on the right dropdown menu and choose one country from the left dropdown, then press submit. Now choose another country from the left dropdown menu while keeping the right dropdown as it is (with the previous choice) and press submit again. Now you can again choose more countries to include in the comparison graph the same way. If you want to perform a new comparison refresh the page.`);
+    alert(`To perform comparisons choose one of the comparison modes on the bottom dropdown menu and choose one country from the top dropdown, then press submit. Now choose another country from the top dropdown menu while keeping the bottom dropdown as it is (with the previous choice) and press submit again. Now you can again choose more countries to include in the comparison graph the same way. If you want to perform a new comparison refresh the page.`);
+});
+
+about.addEventListener('click', e => {
+    alert(`For more information, comments or questions:
+    email: anastas.stelios@gmail.com`);
 });
