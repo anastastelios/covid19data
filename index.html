@@ -11,13 +11,14 @@
 
 <body>
     <div class="container">
-        <h1 class="main__header">Welcome to my unofficial site of Covid-19 data</h1>
+        <h1 class="main__header"> Welcome to Covid-19 data site</h1>
         <h2 class="secondary__header">Use the dropdown menus below to display current information or
             graphs
             for the country of your choice</h2>
         <h3>All data are mined from <a href="https://coronavirus.jhu.edu/">Johns Hopkins Coronavirus Resource Center</a>
             in
             real time.</h3>
+        <h3 id="comparison__details">Click here for info on how to perform comparisons...</h3>
         <form>
             <select name="country" id="country-select">
 
@@ -41,15 +42,10 @@
             </select>
             <br>
             <button type="submit">Submit</button>
-            <!-- <input type="submit"> -->
         </form>
-        <h3 id="comparison__details">Click here for info on how to perform comparisons...</h3><br>
         <hr>
-        <!-- <h2 class="error">{{covidText}}</h2> -->
         <div class="main__container">
-            <div id="spinner" class="spinner">
-                <img class="loader__image" src="./virus.png" alt="Virus Loader">
-            </div>
+            <img class="spinner" id="spinner" src="./virus.png" alt="Virus Loader">
             <table>
                 <thead>
                     <tr id="table__titles">

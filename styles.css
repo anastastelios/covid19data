@@ -91,10 +91,6 @@ form {
     margin: 2rem;
 }
 
-.error {
-    margin: 2rem;
-}
-
 input[type="text"] {
     font-size: 1.5rem;
     margin: 0 1.5rem;
@@ -104,6 +100,8 @@ input[type="text"] {
 }
 
 button[type="submit"] {
+    background-color: #228422;
+    color: white;
     font-size: 1.5rem;
     margin: 1rem;
     border-radius: 8px;
@@ -168,27 +166,31 @@ th {
     width: 120px;
     height: 120px;
     border-radius: 50%;
-    border: 10px solid #A52A2A;
     margin: 3% 40%;
     position: relative;
     left: 4vw;
     z-index: 1;
+    animation: rt 4s infinite;
 }
 
-.spinner:before {
-    content: '';
-    width: 120px;
-    height: 120px;
-    border-radius: 50%;
-    border-top: 10px solid #1F1710;
-    border-right: 10px solid transparent;
-    border-bottom: 10px solid transparent;
-    border-left: 10px solid transparent;
-    position: absolute;
-    z-index: 9;
-    top: -20px;
-    left: -20px;
-    animation: rt 2s infinite;
+@keyframes rt {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.loader__image {
+    width: 100px;
+    height: 100px;
+    text-align: center;
+    animation: rt 3s infinite;
+}
+
+.hide__spinner {
+    display: none;
 }
 
 #comparison__details {
@@ -207,32 +209,6 @@ th {
 
 #about:hover {
     cursor: pointer;
-}
-
-@keyframes rt {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(360deg);
-    }
-}
-
-.spinner>.fa {
-    font-size: 32px;
-    text-align: center;
-    display: block;
-    margin: 30% 0;
-}
-
-.loader__image {
-    width: 100px;
-    height: 100px;
-    text-align: center;
-}
-
-.hide__spinner {
-    display: none;
 }
 
 @media screen and (max-width: 900px) {
@@ -265,9 +241,6 @@ th {
     }
     form {
         text-align: center;
-        margin: 1.3rem;
-    }
-    .error {
         margin: 1.3rem;
     }
     input[type="text"] {
@@ -365,9 +338,6 @@ th {
         text-align: center;
         margin: 1rem;
     }
-    .error {
-        margin: 1rem;
-    }
     input[type="text"] {
         font-size: 0.75rem;
         margin: 0 0.75rem;
@@ -463,9 +433,6 @@ th {
         text-align: center;
         margin: 0.7rem;
     }
-    .error {
-        margin: 0.7rem;
-    }
     input[type="text"] {
         font-size: 0.5rem;
         margin: 0 0.5rem;
@@ -559,9 +526,6 @@ th {
     }
     form {
         text-align: center;
-        margin: 0.5rem;
-    }
-    .error {
         margin: 0.5rem;
     }
     input[type="text"] {
