@@ -13,13 +13,18 @@ const spinner = document.getElementById('spinner');
 const comparisonDetails = document.getElementById('comparison__details');
 const about = document.getElementById('about');
 
-const complicatedCountries = ['australia', 'canada', 'china', 'france', 'germany', 'netherlands', 'united-kingdom', 'us', 'cuba'];
+const complicatedCountries = ['australia', 'canada', 'china', 'france', 'germany', 'netherlands', 'united-kingdom', 'united-states', 'cuba'];
 const doubleCountries = ['Iran (Islamic Republic of)', 'Korea, South', 'Republic of Korea', 'Russian Federation', 'Taiwan*', 'Bahamas, The', '', 'Others', 'Republic of the Congo', 'Cape Verde', 'The Bahamas'];
 
 axios(`https://api.covid19api.com/countries`)
     .then(resp => {
+        const countriesAlpha = resp.data.sort(function (a, b) {
+            if (a.Country < b.Country) { return -1; }
+            if (a.Country > b.Country) { return 1; }
+            return 0;
+        });
         let output = '<option value="">--Please select a country--</option>'
-        resp.data.forEach(country => {
+        countriesAlpha.forEach(country => {
             if (doubleCountries.findIndex(item => item === country.Country) === -1) {
                 output += `<option value="${country.Slug}">${country.Country}</option>`
             }
@@ -177,15 +182,18 @@ submitBtn.addEventListener('click', (e) => {
             .then(resp => {
                 tableTitles.innerHTML = '';
                 if (complicatedCountries.findIndex(item => item === curCountry) > -1) {
-                    console.log(resp);
                     let dateTable = [resp.data[0].Date];
                     let casesTable = [];
                     let casesSum = resp.data[0].Cases;
                     resp.data.forEach((day, index, array) => {
                         if (index > 0) {
                             if (index === (resp.data.length - 1)) {
-                                casesSum += day.Cases;
-                                casesTable.push(casesSum);
+                                if (day.Date === array[index - 1].Date) {
+                                    casesSum += day.Cases;
+                                    casesTable.push(casesSum);
+                                } else {
+                                    casesTable.push(day.Cases);
+                                }
                             } else if (day.Date === array[index - 1].Date) {
                                 casesSum += day.Cases;
                             } else {
@@ -289,8 +297,12 @@ submitBtn.addEventListener('click', (e) => {
                     resp.data.forEach((day, index, array) => {
                         if (index > 0) {
                             if (index === (resp.data.length - 1)) {
-                                casesSum += day.Cases;
-                                casesTable.push(casesSum);
+                                if (day.Date === array[index - 1].Date) {
+                                    casesSum += day.Cases;
+                                    casesTable.push(casesSum);
+                                } else {
+                                    casesTable.push(day.Cases);
+                                }
                             } else if (day.Date === array[index - 1].Date) {
                                 casesSum += day.Cases;
                             } else {
@@ -394,8 +406,12 @@ submitBtn.addEventListener('click', (e) => {
                     resp.data.forEach((day, index, array) => {
                         if (index > 0) {
                             if (index === (resp.data.length - 1)) {
-                                casesSum += day.Cases;
-                                casesTable.push(casesSum);
+                                if (day.Date === array[index - 1].Date) {
+                                    casesSum += day.Cases;
+                                    casesTable.push(casesSum);
+                                } else {
+                                    casesTable.push(day.Cases);
+                                }
                             } else if (day.Date === array[index - 1].Date) {
                                 casesSum += day.Cases;
                             } else {
@@ -510,8 +526,12 @@ submitBtn.addEventListener('click', (e) => {
                     resp.data.forEach((day, index, array) => {
                         if (index > 0) {
                             if (index === (resp.data.length - 1)) {
-                                casesSum += day.Cases;
-                                casesTable.push(casesSum);
+                                if (day.Date === array[index - 1].Date) {
+                                    casesSum += day.Cases;
+                                    casesTable.push(casesSum);
+                                } else {
+                                    casesTable.push(day.Cases);
+                                }
                             } else if (day.Date === array[index - 1].Date) {
                                 casesSum += day.Cases;
                             } else {
@@ -626,8 +646,12 @@ submitBtn.addEventListener('click', (e) => {
                             resp.data.forEach((day, index, array) => {
                                 if (index > 0) {
                                     if (index === (resp.data.length - 1)) {
-                                        casesSum += day.Cases;
-                                        casesTable.push(casesSum);
+                                        if (day.Date === array[index - 1].Date) {
+                                            casesSum += day.Cases;
+                                            casesTable.push(casesSum);
+                                        } else {
+                                            casesTable.push(day.Cases);
+                                        }
                                     } else if (day.Date === array[index - 1].Date) {
                                         casesSum += day.Cases;
                                     } else {
@@ -644,8 +668,12 @@ submitBtn.addEventListener('click', (e) => {
                             resp2.data.forEach((day, index, array) => {
                                 if (index > 0) {
                                     if (index === (resp2.data.length - 1)) {
-                                        casesSum2 += day.Cases;
-                                        casesTable2.push(casesSum2);
+                                        if (day.Date === array[index - 1].Date) {
+                                            casesSum2 += day.Cases;
+                                            casesTable2.push(casesSum2);
+                                        } else {
+                                            casesTable2.push(day.Cases);
+                                        }
                                     } else if (day.Date === array[index - 1].Date) {
                                         casesSum2 += day.Cases;
                                     } else {
@@ -777,8 +805,12 @@ submitBtn.addEventListener('click', (e) => {
                             resp.data.forEach((day, index, array) => {
                                 if (index > 0) {
                                     if (index === (resp.data.length - 1)) {
-                                        casesSum += day.Cases;
-                                        casesTable.push(casesSum);
+                                        if (day.Date === array[index - 1].Date) {
+                                            casesSum += day.Cases;
+                                            casesTable.push(casesSum);
+                                        } else {
+                                            casesTable.push(day.Cases);
+                                        }
                                     } else if (day.Date === array[index - 1].Date) {
                                         casesSum += day.Cases;
                                     } else {
@@ -803,8 +835,12 @@ submitBtn.addEventListener('click', (e) => {
                             resp2.data.forEach((day, index, array) => {
                                 if (index > 0) {
                                     if (index === (resp2.data.length - 1)) {
-                                        casesSum2 += day.Cases;
-                                        casesTable2.push(casesSum2);
+                                        if (day.Date === array[index - 1].Date) {
+                                            casesSum2 += day.Cases;
+                                            casesTable2.push(casesSum2);
+                                        } else {
+                                            casesTable2.push(day.Cases);
+                                        }
                                     } else if (day.Date === array[index - 1].Date) {
                                         casesSum2 += day.Cases;
                                     } else {
@@ -943,8 +979,12 @@ submitBtn.addEventListener('click', (e) => {
                     resp.data.forEach((day, index, array) => {
                         if (index > 0) {
                             if (index === (resp.data.length - 1)) {
-                                casesSum += day.Cases;
-                                casesTable.push(casesSum);
+                                if (day.Date === array[index - 1].Date) {
+                                    casesSum += day.Cases;
+                                    casesTable.push(casesSum);
+                                } else {
+                                    casesTable.push(day.Cases);
+                                }
                             } else if (day.Date === array[index - 1].Date) {
                                 casesSum += day.Cases;
                             } else {
@@ -1047,8 +1087,12 @@ submitBtn.addEventListener('click', (e) => {
                     resp.data.forEach((day, index, array) => {
                         if (index > 0) {
                             if (index === (resp.data.length - 1)) {
-                                casesSum += day.Cases;
-                                casesTable.push(casesSum);
+                                if (day.Date === array[index - 1].Date) {
+                                    casesSum += day.Cases;
+                                    casesTable.push(casesSum);
+                                } else {
+                                    casesTable.push(day.Cases);
+                                }
                             } else if (day.Date === array[index - 1].Date) {
                                 casesSum += day.Cases;
                             } else {

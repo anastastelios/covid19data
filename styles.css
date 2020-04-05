@@ -170,7 +170,7 @@ th {
     position: relative;
     left: 4vw;
     z-index: 1;
-    animation: rt 4s infinite;
+    animation: rt 3s infinite;
 }
 
 @keyframes rt {
