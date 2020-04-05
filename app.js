@@ -15,7 +15,7 @@ const about = document.getElementById('about');
 
 const complicatedCountries = ['australia', 'canada', 'china', 'france', 'germany', 'netherlands', 'united-kingdom', 'united-states', 'cuba'];
 const extraComplicatedCountries = [];
-const doubleCountries = ['Iran (Islamic Republic of)', 'Korea, South', 'Republic of Korea', 'Russian Federation', 'Taiwan*', 'Bahamas, The', '', 'Others', 'Republic of the Congo', 'Cape Verde', 'The Bahamas'];
+const doubleCountries = ['Iran (Islamic Republic of)', 'Korea, South', 'Republic of Korea', 'Taiwan*', 'Bahamas, The', '', 'Others', 'Republic of the Congo', 'The Bahamas'];
 
 axios(`https://api.covid19api.com/countries`)
     .then(resp => {
