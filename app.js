@@ -14,6 +14,7 @@ const comparisonDetails = document.getElementById('comparison__details');
 const about = document.getElementById('about');
 
 const complicatedCountries = ['australia', 'canada', 'china', 'france', 'germany', 'netherlands', 'united-kingdom', 'united-states', 'cuba'];
+const extraComplicatedCountries = [];
 const doubleCountries = ['Iran (Islamic Republic of)', 'Korea, South', 'Republic of Korea', 'Russian Federation', 'Taiwan*', 'Bahamas, The', '', 'Others', 'Republic of the Congo', 'Cape Verde', 'The Bahamas'];
 
 axios(`https://api.covid19api.com/countries`)
@@ -1189,6 +1190,63 @@ submitBtn.addEventListener('click', (e) => {
             .then(resp => {
                 tableTitles.innerHTML = '';
                 if (complicatedCountries.findIndex(item => item === curCountry) > -1) {
+                    let dateTable = [0];
+                    let casesTable = [];
+                    let casesSum = resp.data[resp.data.findIndex(item => item.Cases > 0)].Cases;
+                    let startingPoint = 0;
+                    resp.data.filter(item => item.Cases !== 0).forEach((day, index, array) => {
+                        if (index > 0) {
+                            if (index === (resp.data.filter(item => item.Cases !== 0).length - 1)) {
+                                if (day.Date === array[index - 1].Date) {
+                                    casesSum += day.Cases;
+                                    casesTable.push(casesSum);
+                                } else {
+                                    casesTable.push(day.Cases);
+                                    dateTable.push(index - startingPoint);
+                                }
+                            } else if (day.Date === array[index - 1].Date) {
+                                casesSum += day.Cases;
+                                startingPoint++;
+                            } else {
+                                dateTable.push(index - startingPoint);
+                                casesTable.push(casesSum);
+                                casesSum = day.Cases;
+                            }
+                        }
+                    });
+
+                    dataTable.innerHTML = '';
+
+                    var trace1 = {
+                        x: dateTable,
+                        y: casesTable,
+                        mode: 'lines',
+                        type: 'scatter',
+                        name: `${curCountry}`
+                    };
+
+                    var data = [trace1];
+
+                    var layout = {
+                        font: {
+                            family: 'Courier New, monospace',
+                            size: 18,
+                            color: 'white'
+                        },
+                        plot_bgcolor: "#d3d3d3",
+                        paper_bgcolor: "#089595",
+                        xaxis: {
+                            title: 'Day'
+                        },
+                        yaxis: {
+                            title: 'Total Deaths'
+                        },
+                        title: `Total number of Covid-19 deaths comparison by Day-0`
+                    };
+
+                    Plotly.plot('myDiv', data, layout, { showSendToCloud: true });
+                    spinner.classList.toggle("hide__spinner");
+                } else if (extraComplicatedCountries.findIndex(item => item === curCountry) > -1) {
                     dataTable.innerHTML = '<h1 class="missing__data">This data will be available soon</h1><br><h2 class="missing__data">Error printing graph</h2>';
                     spinner.classList.toggle("hide__spinner");
                 } else if (resp.data[resp.data.length - 1].Cases === 0) {
@@ -1245,11 +1303,65 @@ submitBtn.addEventListener('click', (e) => {
     }
 
     if (selectElem.value === 'compareCases0') {
-        axios(`https://api.covid19api.com/country/${curCountry.toLowerCase()}/status/deaths`)
+        axios(`https://api.covid19api.com/country/${curCountry.toLowerCase()}/status/confirmed`)
             .then(resp => {
                 tableTitles.innerHTML = '';
                 if (complicatedCountries.findIndex(item => item === curCountry) > -1) {
-                    dataTable.innerHTML = '<h1 class="missing__data">This data will be available soon</h1><br><h2 class="missing__data">Error printing graph</h2>';
+                    let dateTable = [0];
+                    let casesTable = [];
+                    let casesSum = resp.data[resp.data.findIndex(item => item.Cases > 0)].Cases;
+                    let startingPoint = 0;
+                    resp.data.filter(item => item.Cases !== 0).forEach((day, index, array) => {
+                        if (index > 0) {
+                            if (index === (resp.data.filter(item => item.Cases !== 0).length - 1)) {
+                                if (day.Date === array[index - 1].Date) {
+                                    casesSum += day.Cases;
+                                    casesTable.push(casesSum);
+                                } else {
+                                    casesTable.push(day.Cases);
+                                    dateTable.push(index - startingPoint);
+                                }
+                            } else if (day.Date === array[index - 1].Date) {
+                                casesSum += day.Cases;
+                                startingPoint++;
+                            } else {
+                                dateTable.push(index - startingPoint);
+                                casesTable.push(casesSum);
+                                casesSum = day.Cases;
+                            }
+                        }
+                    });
+
+                    dataTable.innerHTML = '';
+
+                    var trace1 = {
+                        x: dateTable,
+                        y: casesTable,
+                        mode: 'lines',
+                        type: 'scatter',
+                        name: `${curCountry}`
+                    };
+
+                    var data = [trace1];
+
+                    var layout = {
+                        font: {
+                            family: 'Courier New, monospace',
+                            size: 18,
+                            color: 'white'
+                        },
+                        plot_bgcolor: "#d3d3d3",
+                        paper_bgcolor: "#089595",
+                        xaxis: {
+                            title: 'Day'
+                        },
+                        yaxis: {
+                            title: 'Total Cases'
+                        },
+                        title: `Total number of Covid-19 cases comparison by Day-0`
+                    };
+
+                    Plotly.plot('myDiv', data, layout, { showSendToCloud: true });
                     spinner.classList.toggle("hide__spinner");
                 } else if (resp.data[resp.data.length - 1].Cases === 0) {
                     dataTable.innerHTML = '<h1 class="missing__data">There is not a single case at the moment</h1><br><h2 class="missing__data">Luckily we cannot make a graph yet</h2>';
@@ -1309,7 +1421,61 @@ submitBtn.addEventListener('click', (e) => {
             .then(resp => {
                 tableTitles.innerHTML = '';
                 if (complicatedCountries.findIndex(item => item === curCountry) > -1) {
-                    dataTable.innerHTML = '<h1 class="missing__data">This data will be available soon</h1><br><h2 class="missing__data">Error printing graph</h2>';
+                    let dateTable = [0];
+                    let casesTable = [];
+                    let casesSum = resp.data[resp.data.findIndex(item => item.Cases > 9)].Cases;
+                    let startingPoint = 0;
+                    resp.data.filter(item => item.Cases > 9).forEach((day, index, array) => {
+                        if (index > 0) {
+                            if (index === (resp.data.filter(item => item.Cases > 9).length - 1)) {
+                                if (day.Date === array[index - 1].Date) {
+                                    casesSum += day.Cases;
+                                    casesTable.push(casesSum);
+                                } else {
+                                    casesTable.push(day.Cases);
+                                    dateTable.push(index - startingPoint);
+                                }
+                            } else if (day.Date === array[index - 1].Date) {
+                                casesSum += day.Cases;
+                                startingPoint++;
+                            } else {
+                                dateTable.push(index - startingPoint);
+                                casesTable.push(casesSum);
+                                casesSum = day.Cases;
+                            }
+                        }
+                    });
+
+                    dataTable.innerHTML = '';
+
+                    var trace1 = {
+                        x: dateTable,
+                        y: casesTable,
+                        mode: 'lines',
+                        type: 'scatter',
+                        name: `${curCountry}`
+                    };
+
+                    var data = [trace1];
+
+                    var layout = {
+                        font: {
+                            family: 'Courier New, monospace',
+                            size: 18,
+                            color: 'white'
+                        },
+                        plot_bgcolor: "#d3d3d3",
+                        paper_bgcolor: "#089595",
+                        xaxis: {
+                            title: 'Day'
+                        },
+                        yaxis: {
+                            title: 'Total Deaths'
+                        },
+                        title: `Total number of Covid-19 deaths comparison after 10th death`
+                    };
+
+                    Plotly.plot('myDiv', data, layout, { showSendToCloud: true });
                     spinner.classList.toggle("hide__spinner");
                 } else if (resp.data[resp.data.length - 1].Cases === 0) {
                     dataTable.innerHTML = '<h1 class="missing__data">There is not a single case at the moment</h1><br><h2 class="missing__data">Luckily we cannot make a graph yet</h2>';
@@ -1365,11 +1531,64 @@ submitBtn.addEventListener('click', (e) => {
     }
 
     if (selectElem.value === 'compareCases10') {
-        axios(`https://api.covid19api.com/country/${curCountry.toLowerCase()}/status/deaths`)
+        axios(`https://api.covid19api.com/country/${curCountry.toLowerCase()}/status/confirmed`)
             .then(resp => {
                 tableTitles.innerHTML = '';
                 if (complicatedCountries.findIndex(item => item === curCountry) > -1) {
-                    dataTable.innerHTML = '<h1 class="missing__data">This data will be available soon</h1><br><h2 class="missing__data">Error printing graph</h2>';
+                    let dateTable = [0];
+                    let casesTable = [];
+                    let casesSum = resp.data[resp.data.findIndex(item => item.Cases > 9)].Cases;
+                    let startingPoint = 0;
+                    resp.data.filter(item => item.Cases > 9).forEach((day, index, array) => {
+                        if (index > 0) {
+                            if (index === (resp.data.filter(item => item.Cases > 9).length - 1)) {
+                                if (day.Date === array[index - 1].Date) {
+                                    casesSum += day.Cases;
+                                    casesTable.push(casesSum);
+                                } else {
+                                    casesTable.push(day.Cases);
+                                    dateTable.push(index - startingPoint);
+                                }
+                            } else if (day.Date === array[index - 1].Date) {
+                                casesSum += day.Cases;
+                                startingPoint++;
+                            } else {
+                                dateTable.push(index - startingPoint);
+                                casesTable.push(casesSum);
+                                casesSum = day.Cases;
+                            }
+                        }
+                    });
+
+                    dataTable.innerHTML = '';
+
+                    var trace1 = {
+                        x: dateTable,
+                        y: casesTable,
+                        mode: 'lines',
+                        type: 'scatter',
+                        name: `${curCountry}`
+                    };
+
+                    var data = [trace1];
+
+                    var layout = {
+                        font: {
+                            family: 'Courier New, monospace',
+                            size: 18,
+                            color: 'white'
+                        },
+                        plot_bgcolor: "#d3d3d3",
+                        paper_bgcolor: "#089595",
+                        xaxis: {
+                            title: 'Day'
+                        },
+                        yaxis: {
+                            title: 'Total Cases'
+                        },
+                        title: `Total number of Covid-19 cases comparison after 10th case`
+                    };
+                    Plotly.plot('myDiv', data, layout, { showSendToCloud: true });
                     spinner.classList.toggle("hide__spinner");
                 } else if (resp.data[resp.data.length - 1].Cases === 0) {
                     dataTable.innerHTML = '<h1 class="missing__data">There is not a single case at the moment</h1><br><h2 class="missing__data">Luckily we cannot make a graph yet</h2>';

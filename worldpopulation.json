@@ -13,7 +13,7 @@
 	},
 	{
 		"Rank": "3",
-		"country": "US",
+		"country": "United States of America",
 		"population": "326474013",
 		"World": "0.043"
 	},
@@ -97,7 +97,7 @@
 	},
 	{
 		"Rank": "17",
-		"country": "Iran",
+		"country": "Iran, Islamic Republic of",
 		"population": "80945718",
 		"World": "0.011"
 	},
@@ -139,7 +139,7 @@
 	},
 	{
 		"Rank": "24",
-		"country": "Tanzania",
+		"country": "Tanzania, United Republic of",
 		"population": "56877529",
 		"World": "0.008"
 	},
@@ -157,7 +157,7 @@
 	},
 	{
 		"Rank": "27",
-		"country": "South Korea",
+		"country": "Korea (South)",
 		"population": "50704971",
 		"World": "0.007"
 	},
@@ -253,7 +253,7 @@
 	},
 	{
 		"Rank": "43",
-		"country": "Venezuela",
+		"country": "Venezuela (Bolivarian Republic)",
 		"population": "31925705",
 		"World": "0.004"
 	},
@@ -325,7 +325,7 @@
 	},
 	{
 		"Rank": "55",
-		"country": "Cote d'Ivoire",
+		"country": "Côte d'Ivoire",
 		"population": "23815886",
 		"World": "0.003"
 	},
@@ -355,7 +355,7 @@
 	},
 	{
 		"Rank": "60",
-		"country": "Syria",
+		"country": "Syrian Arab Republic (Syria)",
 		"population": "18906907",
 		"World": "0.003"
 	},
@@ -511,7 +511,7 @@
 	},
 	{
 		"Rank": "86",
-		"country": "Czechia",
+		"country": "Czech Republic",
 		"population": "10555130",
 		"World": "0.001"
 	},
@@ -709,7 +709,7 @@
 	},
 	{
 		"Rank": "119",
-		"country": "State of Palestine",
+		"country": "Palestinian Territory",
 		"population": "4928225",
 		"World": "0.001"
 	},
@@ -859,7 +859,7 @@
 	},
 	{
 		"Rank": "144",
-		"country": "North Macedonia",
+		"country": "Macedonia, Republic of",
 		"population": "2083308",
 		"World": "0"
 	},
@@ -997,7 +997,7 @@
 	},
 	{
 		"Rank": "167",
-		"country": "Brunei",
+		"country": "Brunei Darussalam",
 		"population": "434448",
 		"World": "0"
 	},
