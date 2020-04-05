@@ -6,23 +6,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
     <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
+    <script src="https://use.fontawesome.com/213877ba50.js"></script>
     <title>Covid-19</title>
 </head>
 
 <body>
     <div class="container">
-        <h1 class="main__header"> Welcome to Covid-19 data site</h1>
+
+        <h1 class="main__header"><a id="back__link" href="http:\\covid19database.netlify.com"><img
+                    style="height: 3rem; width: 3rem; position: relative; top:10px;" src="./home.png" alt="Home"></a>
+            Welcome to Covid-19 data site</h1>
         <h2 class="secondary__header">Use the dropdown menus below to display current information or
             graphs
             for the country of your choice</h2>
         <h3>All data are mined from <a href="https://coronavirus.jhu.edu/">Johns Hopkins Coronavirus Resource Center</a>
             in
             real time.</h3>
-        <div class="info__container">
-            <a id="back__link" href="http:\\covid19database.netlify.com"><button id="back">Back</button></a>
-            <h3 id="comparison__details">Click here for info on how to
-                perform comparisons...</h3>
-        </div>
+        <h3 id="comparison__details">Click here for info on how to
+            perform comparisons...</h3>
 
         <form>
             <select name="country" id="country-select">
