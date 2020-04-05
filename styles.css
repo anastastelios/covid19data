@@ -211,6 +211,20 @@ th {
     cursor: pointer;
 }
 
+#back__link, #comparison__details {
+    display: inline-block;
+}
+
+.info__container {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+}
+
+#back__link, #back {
+    border-radius: 30% !important;
+}
+
 @media screen and (max-width: 900px) {
     .data__container {
         padding: 2rem;
