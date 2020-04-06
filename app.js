@@ -122,7 +122,13 @@ submitBtn.addEventListener('click', (e) => {
     e.preventDefault();
     const curCountry = selectCountry.value;
 
-    if (selectElem.value === 'summary') {
+    if (selectElem.value === '' || selectCountry.value === '') {
+        if (!spinner.classList.contains("hide__spinner")) {
+            spinner.classList.add("hide__spinner");
+        }
+    }
+
+    else if (selectElem.value === 'summary') {
         tableTitles.innerHTML = '';
         graphDiv.innerHTML = '';
         let output = '';
