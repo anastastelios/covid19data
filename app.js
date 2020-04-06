@@ -340,7 +340,7 @@ submitBtn.addEventListener('click', (e) => {
                         yaxis: {
                             title: 'Total Deaths'
                         },
-                        title: `Total number of Covid-19 deaths in ${resp.data[0].Country}`
+                        title: `Total number of Covid-19 cases in ${resp.data[0].Country}`
                     };
 
                     Plotly.newPlot('myDiv', data, layout, { showSendToCloud: true });
@@ -384,7 +384,7 @@ submitBtn.addEventListener('click', (e) => {
                         yaxis: {
                             title: 'Total Cases'
                         },
-                        title: `Total number of Covid-19 Cases in ${resp.data[0].Country}`
+                        title: `Total number of Covid-19 cases in ${resp.data[0].Country}`
                     };
 
                     Plotly.newPlot('myDiv', data, layout, { showSendToCloud: true });
@@ -456,7 +456,7 @@ submitBtn.addEventListener('click', (e) => {
                         yaxis: {
                             title: 'Number of deaths'
                         },
-                        title: `Number of new Covid-19 Deaths per day ${resp.data[0].Country}`
+                        title: `Number of new Covid-19 deaths per day ${resp.data[0].Country}`
                     };
 
                     Plotly.newPlot('myDiv', data, layout, { showSendToCloud: true });
@@ -503,7 +503,7 @@ submitBtn.addEventListener('click', (e) => {
                         yaxis: {
                             title: 'Number of deaths'
                         },
-                        title: `Number of new Covid-19 Deaths per day ${resp.data[0].Country}`
+                        title: `Number of new Covid-19 deaths per day ${resp.data[0].Country}`
                     };
 
                     Plotly.newPlot('myDiv', data, layout, { showSendToCloud: true });
@@ -575,7 +575,7 @@ submitBtn.addEventListener('click', (e) => {
                         yaxis: {
                             title: 'Number of Cases'
                         },
-                        title: `Number of new Covid-19 Cases per day in ${resp.data[0].Country}`
+                        title: `Number of new Covid-19 cases per day in ${resp.data[0].Country}`
                     };
 
                     Plotly.newPlot('myDiv', data, layout, { showSendToCloud: true });
@@ -622,7 +622,7 @@ submitBtn.addEventListener('click', (e) => {
                         yaxis: {
                             title: 'Number of Cases'
                         },
-                        title: `Number of new Covid-19 Cases per day in ${resp.data[0].Country}`
+                        title: `Number of new Covid-19 cases per day in ${resp.data[0].Country}`
                     };
 
                     Plotly.newPlot('myDiv', data, layout, { showSendToCloud: true });
@@ -892,7 +892,7 @@ submitBtn.addEventListener('click', (e) => {
                                 yaxis: {
                                     title: 'Number of Cases/Deaths'
                                 },
-                                title: `Number of new Covid-19 Deaths/Cases per day in ${resp.data[0].Country}`
+                                title: `Number of new Covid-19 deaths/cases per day in ${resp.data[0].Country}`
                             };
 
                             Plotly.newPlot('myDiv', data, layout, { showSendToCloud: true });
@@ -957,7 +957,7 @@ submitBtn.addEventListener('click', (e) => {
                                 yaxis: {
                                     title: 'Number of Cases/Deaths'
                                 },
-                                title: `Number of new Covid-19 Deaths/Cases per day in ${resp.data[0].Country}`
+                                title: `Number of new Covid-19 deaths/cases per day in ${resp.data[0].Country}`
                             };
 
                             Plotly.newPlot('myDiv', data, layout, { showSendToCloud: true });
@@ -1423,11 +1423,11 @@ submitBtn.addEventListener('click', (e) => {
                 if (complicatedCountries.findIndex(item => item === curCountry) > -1) {
                     let dateTable = [0];
                     let casesTable = [];
-                    let casesSum = resp.data[resp.data.findIndex(item => item.Cases > 9)].Cases;
+                    let casesSum = resp.data[resp.data.findIndex(item => item.Cases > 0)].Cases;
                     let startingPoint = 0;
-                    resp.data.filter(item => item.Cases > 9).forEach((day, index, array) => {
+                    resp.data.filter(item => item.Cases > 0).forEach((day, index, array) => {
                         if (index > 0) {
-                            if (index === (resp.data.filter(item => item.Cases > 9).length - 1)) {
+                            if (index === (resp.data.filter(item => item.Cases > 0).length - 1)) {
                                 if (day.Date === array[index - 1].Date) {
                                     casesSum += day.Cases;
                                     casesTable.push(casesSum);
@@ -1445,6 +1445,10 @@ submitBtn.addEventListener('click', (e) => {
                             }
                         }
                     });
+
+                    let case10Index = casesTable.findIndex(item => item > 9);
+                    casesTable = casesTable.filter((item, index) => index >= case10Index);
+                    dateTable = dateTable.filter((item, index) => index >= case10Index);
 
                     dataTable.innerHTML = '';
 
@@ -1537,11 +1541,11 @@ submitBtn.addEventListener('click', (e) => {
                 if (complicatedCountries.findIndex(item => item === curCountry) > -1) {
                     let dateTable = [0];
                     let casesTable = [];
-                    let casesSum = resp.data[resp.data.findIndex(item => item.Cases > 9)].Cases;
+                    let casesSum = resp.data[resp.data.findIndex(item => item.Cases > 0)].Cases;
                     let startingPoint = 0;
-                    resp.data.filter(item => item.Cases > 9).forEach((day, index, array) => {
+                    resp.data.filter(item => item.Cases > 0).forEach((day, index, array) => {
                         if (index > 0) {
-                            if (index === (resp.data.filter(item => item.Cases > 9).length - 1)) {
+                            if (index === (resp.data.filter(item => item.Cases > 0).length - 1)) {
                                 if (day.Date === array[index - 1].Date) {
                                     casesSum += day.Cases;
                                     casesTable.push(casesSum);
@@ -1559,6 +1563,10 @@ submitBtn.addEventListener('click', (e) => {
                             }
                         }
                     });
+
+                    let case10Index = casesTable.findIndex(item => item > 9);
+                    casesTable = casesTable.filter((item, index) => index >= case10Index);
+                    dateTable = dateTable.filter((item, index) => index >= case10Index);
 
                     dataTable.innerHTML = '';
 
@@ -1644,7 +1652,7 @@ submitBtn.addEventListener('click', (e) => {
 });
 
 comparisonDetails.addEventListener('click', e => {
-    alert(`To perform comparisons choose one of the comparison modes on the bottom dropdown menu and choose one country from the top dropdown, then press submit. Now choose another country from the top dropdown menu while keeping the bottom dropdown as it is (with the previous choice) and press submit again. Now you can again choose more countries to include in the comparison graph the same way. If you want to perform a new comparison refresh the page.`);
+    alert(`To perform comparisons choose one of the comparison modes on the bottom dropdown menu and choose one country from the top dropdown, then press submit. Now choose another country from the top dropdown menu while keeping the bottom dropdown as it is (with the previous choice) and press submit again. Now you can again choose more countries to include in the comparison graph the same way. If you want to perform a new comparison refresh the page. Note: If the graph does't seem right please refresh the page and try again. Also note that in countries like United States of America it could take a while to load the data, so please be patient.`);
 });
 
 about.addEventListener('click', e => {
