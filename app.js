@@ -981,7 +981,7 @@ submitBtn.addEventListener('click', (e) => {
             .then(resp => {
                 tableTitles.innerHTML = '';
                 if (usedCountries.findIndex(item => item === curCountry) > -1) {
-                    alert(`This country is already used in the graph!`);
+                    alert(`This country is already used in the graph! Please reload the page!`);
                     spinner.classList.toggle("hide__spinner");
                 } else if (complicatedCountries.findIndex(item => item === curCountry) > -1) {
                     let dateTable = [resp.data[0].Date];
@@ -1094,7 +1094,7 @@ submitBtn.addEventListener('click', (e) => {
             .then(resp => {
                 tableTitles.innerHTML = '';
                 if (usedCountries.findIndex(item => item === curCountry) > -1) {
-                    alert(`This country is already used in the graph!`);
+                    alert(`This country is already used in the graph! Please reload the page!`);
                     spinner.classList.toggle("hide__spinner");
                 } else if (complicatedCountries.findIndex(item => item === curCountry) > -1) {
                     let dateTable = [resp.data[0].Date];
@@ -1207,7 +1207,7 @@ submitBtn.addEventListener('click', (e) => {
             .then(resp => {
                 tableTitles.innerHTML = '';
                 if (usedCountries.findIndex(item => item === curCountry) > -1) {
-                    alert(`This country is already used in the graph!`);
+                    alert(`This country is already used in the graph! Please reload the page!`);
                     spinner.classList.toggle("hide__spinner");
                 } else if (complicatedCountries.findIndex(item => item === curCountry) > -1) {
                     let dateTable = [0];
@@ -1329,7 +1329,7 @@ submitBtn.addEventListener('click', (e) => {
             .then(resp => {
                 tableTitles.innerHTML = '';
                 if (usedCountries.findIndex(item => item === curCountry) > -1) {
-                    alert(`This country is already used in the graph!`);
+                    alert(`This country is already used in the graph! Please reload the page!`);
                     spinner.classList.toggle("hide__spinner");
                 } else if (complicatedCountries.findIndex(item => item === curCountry) > -1) {
                     let dateTable = [0];
@@ -1448,7 +1448,7 @@ submitBtn.addEventListener('click', (e) => {
             .then(resp => {
                 tableTitles.innerHTML = '';
                 if (usedCountries.findIndex(item => item === curCountry) > -1) {
-                    alert(`This country is already used in the graph!`);
+                    alert(`This country is already used in the graph! Please reload the page!`);
                     spinner.classList.toggle("hide__spinner");
                 } else if (complicatedCountries.findIndex(item => item === curCountry) > -1) {
                     let dateTable = [0];
@@ -1478,7 +1478,10 @@ submitBtn.addEventListener('click', (e) => {
 
                     let case10Index = casesTable.findIndex(item => item > 9);
                     casesTable = casesTable.filter((item, index) => index >= case10Index);
-                    dateTable = dateTable.filter((item, index) => index >= case10Index);
+                    dateTable = [];
+                    for (let i = 0; i < casesTable.length; i++) {
+                        dateTable.push(i);
+                    }
 
                     dataTable.innerHTML = '';
 
@@ -1571,7 +1574,7 @@ submitBtn.addEventListener('click', (e) => {
             .then(resp => {
                 tableTitles.innerHTML = '';
                 if (usedCountries.findIndex(item => item === curCountry) > -1) {
-                    alert(`This country is already used in the graph!`);
+                    alert(`This country is already used in the graph! Please reload the page!`);
                     spinner.classList.toggle("hide__spinner");
                 } else if (complicatedCountries.findIndex(item => item === curCountry) > -1) {
                     let dateTable = [0];
@@ -1601,7 +1604,10 @@ submitBtn.addEventListener('click', (e) => {
 
                     let case10Index = casesTable.findIndex(item => item > 9);
                     casesTable = casesTable.filter((item, index) => index >= case10Index);
-                    dateTable = dateTable.filter((item, index) => index >= case10Index);
+                    dateTable = [];
+                    for (let i = 0; i < casesTable.length; i++) {
+                        dateTable.push(i);
+                    }
 
                     dataTable.innerHTML = '';
 
