@@ -16,6 +16,7 @@ const about = document.getElementById('about');
 const complicatedCountries = ['australia', 'canada', 'china', 'france', 'germany', 'netherlands', 'united-kingdom', 'united-states', 'cuba'];
 const extraComplicatedCountries = [];
 const doubleCountries = ['Iran (Islamic Republic of)', 'Korea, South', 'Republic of Korea', 'Taiwan*', 'Bahamas, The', '', 'Others', 'Republic of the Congo', 'The Bahamas'];
+const usedCountries = [];
 
 axios(`https://api.covid19api.com/countries`)
     .then(resp => {
@@ -973,7 +974,10 @@ submitBtn.addEventListener('click', (e) => {
         axios(`https://api.covid19api.com/country/${curCountry.toLowerCase()}/status/deaths`)
             .then(resp => {
                 tableTitles.innerHTML = '';
-                if (complicatedCountries.findIndex(item => item === curCountry) > -1) {
+                if (usedCountries.findIndex(item => item === curCountry) > -1) {
+                    alert(`This country is already used in the graph!`);
+                    spinner.classList.toggle("hide__spinner");
+                } else if (complicatedCountries.findIndex(item => item === curCountry) > -1) {
                     let dateTable = [resp.data[0].Date];
                     let casesTable = [];
                     let casesSum = resp.data[0].Cases;
@@ -1028,7 +1032,8 @@ submitBtn.addEventListener('click', (e) => {
 
                     Plotly.plot('myDiv', data, layout, { showSendToCloud: true });
                     spinner.classList.toggle("hide__spinner");
-                } else if (resp.data[resp.data.length - 1].Cases === 0) {
+                    usedCountries.push(curCountry);
+                } else if (resp.data.length === 0 || resp.data[resp.data.length - 1].Cases === 0) {
                     dataTable.innerHTML = '<h1 class="missing__data">There is not a single case at the moment</h1><br><h2 class="missing__data">Luckily we cannot make a graph yet</h2>';
                     spinner.classList.toggle("hide__spinner");
                 } else {
@@ -1071,6 +1076,7 @@ submitBtn.addEventListener('click', (e) => {
 
                     Plotly.plot('myDiv', data, layout, { showSendToCloud: true });
                     spinner.classList.toggle("hide__spinner");
+                    usedCountries.push(curCountry);
                 }
             }).catch(error => {
                 console.log(error);
@@ -1081,7 +1087,10 @@ submitBtn.addEventListener('click', (e) => {
         axios(`https://api.covid19api.com/country/${curCountry.toLowerCase()}/status/deaths`)
             .then(resp => {
                 tableTitles.innerHTML = '';
-                if (complicatedCountries.findIndex(item => item === curCountry) > -1) {
+                if (usedCountries.findIndex(item => item === curCountry) > -1) {
+                    alert(`This country is already used in the graph!`);
+                    spinner.classList.toggle("hide__spinner");
+                } else if (complicatedCountries.findIndex(item => item === curCountry) > -1) {
                     let dateTable = [resp.data[0].Date];
                     let casesTable = [];
                     let casesSum = resp.data[0].Cases;
@@ -1136,7 +1145,8 @@ submitBtn.addEventListener('click', (e) => {
 
                     Plotly.plot('myDiv', data, layout, { showSendToCloud: true });
                     spinner.classList.toggle("hide__spinner");
-                } else if (resp.data[resp.data.length - 1].Cases === 0) {
+                    usedCountries.push(curCountry);
+                } else if (resp.data.length === 0 || resp.data[resp.data.length - 1].Cases === 0) {
                     dataTable.innerHTML = '<h1 class="missing__data">There is not a single case at the moment</h1><br><h2 class="missing__data">Luckily we cannot make a graph yet</h2>';
                     spinner.classList.toggle("hide__spinner");
                 } else {
@@ -1179,6 +1189,7 @@ submitBtn.addEventListener('click', (e) => {
 
                     Plotly.plot('myDiv', data, layout, { showSendToCloud: true });
                     spinner.classList.toggle("hide__spinner");
+                    usedCountries.push(curCountry);
                 }
             }).catch(error => {
                 console.log(error);
@@ -1189,7 +1200,10 @@ submitBtn.addEventListener('click', (e) => {
         axios(`https://api.covid19api.com/country/${curCountry.toLowerCase()}/status/deaths`)
             .then(resp => {
                 tableTitles.innerHTML = '';
-                if (complicatedCountries.findIndex(item => item === curCountry) > -1) {
+                if (usedCountries.findIndex(item => item === curCountry) > -1) {
+                    alert(`This country is already used in the graph!`);
+                    spinner.classList.toggle("hide__spinner");
+                } else if (complicatedCountries.findIndex(item => item === curCountry) > -1) {
                     let dateTable = [0];
                     let casesTable = [];
                     let casesSum = resp.data[resp.data.findIndex(item => item.Cases > 0)].Cases;
@@ -1246,10 +1260,11 @@ submitBtn.addEventListener('click', (e) => {
 
                     Plotly.plot('myDiv', data, layout, { showSendToCloud: true });
                     spinner.classList.toggle("hide__spinner");
+                    usedCountries.push(curCountry);
                 } else if (extraComplicatedCountries.findIndex(item => item === curCountry) > -1) {
                     dataTable.innerHTML = '<h1 class="missing__data">This data will be available soon</h1><br><h2 class="missing__data">Error printing graph</h2>';
                     spinner.classList.toggle("hide__spinner");
-                } else if (resp.data[resp.data.length - 1].Cases === 0) {
+                } else if (resp.data.length === 0 || resp.data[resp.data.length - 1].Cases === 0) {
                     dataTable.innerHTML = '<h1 class="missing__data">There is not a single case at the moment</h1><br><h2 class="missing__data">Luckily we cannot make a graph yet</h2>';
                     spinner.classList.toggle("hide__spinner");
                 } else {
@@ -1296,6 +1311,7 @@ submitBtn.addEventListener('click', (e) => {
 
                     Plotly.plot('myDiv', data, layout, { showSendToCloud: true });
                     spinner.classList.toggle("hide__spinner");
+                    usedCountries.push(curCountry);
                 }
             }).catch(error => {
                 console.log(error);
@@ -1306,7 +1322,10 @@ submitBtn.addEventListener('click', (e) => {
         axios(`https://api.covid19api.com/country/${curCountry.toLowerCase()}/status/confirmed`)
             .then(resp => {
                 tableTitles.innerHTML = '';
-                if (complicatedCountries.findIndex(item => item === curCountry) > -1) {
+                if (usedCountries.findIndex(item => item === curCountry) > -1) {
+                    alert(`This country is already used in the graph!`);
+                    spinner.classList.toggle("hide__spinner");
+                } else if (complicatedCountries.findIndex(item => item === curCountry) > -1) {
                     let dateTable = [0];
                     let casesTable = [];
                     let casesSum = resp.data[resp.data.findIndex(item => item.Cases > 0)].Cases;
@@ -1363,7 +1382,8 @@ submitBtn.addEventListener('click', (e) => {
 
                     Plotly.plot('myDiv', data, layout, { showSendToCloud: true });
                     spinner.classList.toggle("hide__spinner");
-                } else if (resp.data[resp.data.length - 1].Cases === 0) {
+                    usedCountries.push(curCountry);
+                } else if (resp.data.length === 0 || resp.data[resp.data.length - 1].Cases === 0) {
                     dataTable.innerHTML = '<h1 class="missing__data">There is not a single case at the moment</h1><br><h2 class="missing__data">Luckily we cannot make a graph yet</h2>';
                     spinner.classList.toggle("hide__spinner");
                 } else {
@@ -1410,6 +1430,7 @@ submitBtn.addEventListener('click', (e) => {
 
                     Plotly.plot('myDiv', data, layout, { showSendToCloud: true });
                     spinner.classList.toggle("hide__spinner");
+                    usedCountries.push(curCountry);
                 }
             }).catch(error => {
                 console.log(error);
@@ -1420,7 +1441,10 @@ submitBtn.addEventListener('click', (e) => {
         axios(`https://api.covid19api.com/country/${curCountry.toLowerCase()}/status/deaths`)
             .then(resp => {
                 tableTitles.innerHTML = '';
-                if (complicatedCountries.findIndex(item => item === curCountry) > -1) {
+                if (usedCountries.findIndex(item => item === curCountry) > -1) {
+                    alert(`This country is already used in the graph!`);
+                    spinner.classList.toggle("hide__spinner");
+                } else if (complicatedCountries.findIndex(item => item === curCountry) > -1) {
                     let dateTable = [0];
                     let casesTable = [];
                     let casesSum = resp.data[resp.data.findIndex(item => item.Cases > 0)].Cases;
@@ -1481,8 +1505,9 @@ submitBtn.addEventListener('click', (e) => {
 
                     Plotly.plot('myDiv', data, layout, { showSendToCloud: true });
                     spinner.classList.toggle("hide__spinner");
-                } else if (resp.data[resp.data.length - 1].Cases === 0) {
-                    dataTable.innerHTML = '<h1 class="missing__data">There is not a single case at the moment</h1><br><h2 class="missing__data">Luckily we cannot make a graph yet</h2>';
+                    usedCountries.push(curCountry);
+                } else if (resp.data.length === 0 || resp.data[resp.data.length - 1].Cases < 10) {
+                    dataTable.innerHTML = '<h1 class="missing__data">There are just a few or no cases at the moment</h1><br><h2 class="missing__data">Luckily we cannot make a graph yet</h2>';
                     spinner.classList.toggle("hide__spinner");
                 } else {
                     let dateTable = [];
@@ -1528,6 +1553,7 @@ submitBtn.addEventListener('click', (e) => {
 
                     Plotly.plot('myDiv', data, layout, { showSendToCloud: true });
                     spinner.classList.toggle("hide__spinner");
+                    usedCountries.push(curCountry);
                 }
             }).catch(error => {
                 console.log(error);
@@ -1538,7 +1564,10 @@ submitBtn.addEventListener('click', (e) => {
         axios(`https://api.covid19api.com/country/${curCountry.toLowerCase()}/status/confirmed`)
             .then(resp => {
                 tableTitles.innerHTML = '';
-                if (complicatedCountries.findIndex(item => item === curCountry) > -1) {
+                if (usedCountries.findIndex(item => item === curCountry) > -1) {
+                    alert(`This country is already used in the graph!`);
+                    spinner.classList.toggle("hide__spinner");
+                } else if (complicatedCountries.findIndex(item => item === curCountry) > -1) {
                     let dateTable = [0];
                     let casesTable = [];
                     let casesSum = resp.data[resp.data.findIndex(item => item.Cases > 0)].Cases;
@@ -1598,8 +1627,9 @@ submitBtn.addEventListener('click', (e) => {
                     };
                     Plotly.plot('myDiv', data, layout, { showSendToCloud: true });
                     spinner.classList.toggle("hide__spinner");
-                } else if (resp.data[resp.data.length - 1].Cases === 0) {
-                    dataTable.innerHTML = '<h1 class="missing__data">There is not a single case at the moment</h1><br><h2 class="missing__data">Luckily we cannot make a graph yet</h2>';
+                    usedCountries.push(curCountry);
+                } else if (resp.data.length === 0 || resp.data[resp.data.length - 1].Cases < 10) {
+                    dataTable.innerHTML = '<h1 class="missing__data">There are just a few or no cases at the moment</h1><br><h2 class="missing__data">Luckily we cannot make a graph yet</h2>';
                     spinner.classList.toggle("hide__spinner");
                 } else {
                     let dateTable = [];
@@ -1644,6 +1674,7 @@ submitBtn.addEventListener('click', (e) => {
                     };
                     Plotly.plot('myDiv', data, layout, { showSendToCloud: true });
                     spinner.classList.toggle("hide__spinner");
+                    usedCountries.push(curCountry);
                 }
             }).catch(error => {
                 console.log(error);
