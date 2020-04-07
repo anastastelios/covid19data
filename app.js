@@ -1698,7 +1698,7 @@ comparisonDetails.addEventListener('click', e => {
     alert(`To perform comparisons choose one of the comparison modes on the bottom dropdown menu and choose one country from the top dropdown, then press submit. Now choose another country from the top dropdown menu while keeping the bottom dropdown as it is (with the previous choice) and press submit again. Now you can again choose more countries to include in the comparison graph the same way. If you want to perform a new comparison refresh the page. Note: If the graph doesn't seem right please refresh the page and try again. Also note that in countries like United States of America it could take a while to load the data, so please be patient.`);
 });
 
-about.addEventListener('click', e => {
-    alert(`For more information, comments or questions:
-    email: anastas.stelios@gmail.com`);
-});
+// about.addEventListener('click', e => {
+//     alert(`For more information, comments or questions:
+//     email: anastas.stelios@gmail.com`);
+// });
