@@ -378,7 +378,7 @@ th {
 
 @media screen and (max-width: 588px) {
     body {
-        font-size: 0.5rem;
+        font-size: 0.65rem;
     }
     .data__container {
         padding: 1rem;
@@ -461,7 +461,7 @@ th {
 
 @media screen and (max-width: 430px) {
     body {
-        font-size: 0.3rem;
+        font-size: 0.5rem;
     }
     .data__container {
         padding: 0.7rem;
