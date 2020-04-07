@@ -11,6 +11,7 @@ const graphDiv = document.getElementById('myDiv');
 const tableTitles = document.getElementById('table__titles');
 const spinner = document.getElementById('spinner');
 const comparisonDetails = document.getElementById('comparison__details');
+const comparisonGRDetails = document.getElementById('comparison__details_GR');
 const about = document.getElementById('about');
 
 const complicatedCountries = ['australia', 'canada', 'china', 'france', 'germany', 'netherlands', 'united-kingdom', 'united-states', 'cuba'];
@@ -1695,7 +1696,11 @@ submitBtn.addEventListener('click', (e) => {
 });
 
 comparisonDetails.addEventListener('click', e => {
-    alert(`To perform comparisons choose one of the comparison modes on the bottom dropdown menu and choose one country from the top dropdown, then press submit. Now choose another country from the top dropdown menu while keeping the bottom dropdown as it is (with the previous choice) and press submit again. Now you can again choose more countries to include in the comparison graph the same way. If you want to perform a new comparison refresh the page. Note: If the graph doesn't seem right please refresh the page and try again. Also note that in countries like United States of America it could take a while to load the data, so please be patient.`);
+    alert(`To perform comparisons choose one of the comparison modes on the bottom dropdown menu, then choose one country from the top dropdown, and press submit. Now choose another country from the top dropdown menu while keeping the bottom dropdown as it is (with the previous choice) and press submit again. Now you can choose again more countries to include in the comparison graph the same way. If you want to perform a new comparison refresh the page. Note: If the graph doesn't seem right please refresh the page and try again. Also note that in countries like United States of America it could take a while to load the data, so please be patient.`);
+});
+
+comparisonGRDetails.addEventListener('click', e => {
+    alert(`Για να κάνετε συγκρίσεις, επιλέξτε έναν από τους τρόπους σύγκρισης στο κάτω αναπτυσσόμενο μενού, στη συνέχεια επιλέξτε μια χώρα από το πάνω αναπτυσσόμενο μενού και πατήστε submit/υποβλολή. Τώρα επιλέξτε άλλη χώρα από το αναπτυσσόμενο μενού στο πάνω μενού διατηρώντας παράλληλα το κάτω ως έχει (όπως είναι με την προηγούμενη επιλογή) και πατήστε ξανά submit/υποβολή. Τώρα μπορείτε να επιλέξετε πάλι περισσότερες χώρες για να συμπεριλάβετε στο γράφημα σύγκρισης με τον ίδιο τρόπο. Εάν θέλετε να εκτελέσετε μια νέα σύγκριση, ανανεώστε τη σελίδα. Σημείωση: Εάν το γράφημα δεν φαίνεται σωστό, παρακαλώ ανανεώστε τη σελίδα και δοκιμάστε ξανά. Επίσης, να σημειωθεί ότι σε χώρες όπως οι Ηνωμένες Πολιτείες της Αμερικής μπορεί να χρειαστεί λίγος χρόνος για να φορτωθούν τα δεδομένα, οπότε παρακαλούμε να είστε υπομονετικοί.`);
 });
 
 // about.addEventListener('click', e => {

@@ -198,11 +198,11 @@ th {
     display: none;
 }
 
-#comparison__details {
+#comparison__details, #comparison__details_GR {
     color: #ccc;
 }
 
-#comparison__details:hover {
+#comparison__details:hover, #comparison__details_GR:hover {
     cursor: pointer;
 }
 
