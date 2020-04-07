@@ -459,7 +459,7 @@ th {
     }
 }
 
-@media screen and (max-width: 430px) {
+@media screen and (max-width: 485px) {
     body {
         font-size: 0.4rem;
     }
