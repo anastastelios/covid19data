@@ -76,7 +76,7 @@ axios(`https://api.covid19api.com/summary`)
                 <th>New Cases</th>
                 <th>Total Recovered</th>
                 <th>New Recovered</th>
-                <th>TotalDeaths /1M</th>`
+                <th>Total Deaths /1M</th>`
                 let output = `<tr>
                 <td>World</td>
                 <td>${worldTotDeaths}</td>

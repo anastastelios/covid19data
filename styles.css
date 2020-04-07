@@ -27,6 +27,7 @@ body {
     flex-direction: column;
     width: 98%;
     background-color: #196363;
+    padding: 0 3.5rem;
 }
 
 .subcontainer2 {
@@ -76,14 +77,18 @@ h3 {
     text-align: center;
     background-color: #a52a2a;
     color: white;
-    padding: 0.75rem;
+    padding: 0.75rem 1.5rem;
 }
 
 .secondary__header {
     background-color: #A5622A;
     text-align: center;
-    padding: 0.75rem;
+    padding: 0.75rem 2.5rem;
     margin: 0rem;
+}
+
+.third__header {
+    padding: 0 1.5rem;
 }
 
 form {
@@ -202,7 +207,7 @@ th {
 }
 
 #about {
-    margin-bottom: 2rem;
+    margin: 1.5rem;
     text-align: center;
     color: white;
 }
@@ -226,18 +231,6 @@ th {
         background-color: #ccc;
         border-radius: 5px;
         text-decoration: none;
-    }
-    .main__header {
-        text-align: center;
-        background-color: #a52a2a;
-        color: white;
-        padding: 0.5rem;
-    }
-    .secondary__header {
-        background-color: #A5622A;
-        text-align: center;
-        padding: 0.5rem;
-        margin: 0rem;
     }
     form {
         text-align: center;
@@ -303,7 +296,7 @@ th {
     }
 }
 
-@media screen and (max-width: 685px) {
+@media screen and (max-width: 750px) {
     body {
         font-size: 0.75rem;
     }
@@ -321,18 +314,6 @@ th {
         background-color: #ccc;
         border-radius: 5px;
         text-decoration: none;
-    }
-    .main__header {
-        text-align: center;
-        background-color: #a52a2a;
-        color: white;
-        padding: 0.4rem;
-    }
-    .secondary__header {
-        background-color: #A5622A;
-        text-align: center;
-        padding: 0.4rem;
-        margin: 0rem;
     }
     form {
         text-align: center;
@@ -398,7 +379,7 @@ th {
     }
 }
 
-@media screen and (max-width: 555px) {
+@media screen and (max-width: 588px) {
     body {
         font-size: 0.5rem;
     }
@@ -416,18 +397,6 @@ th {
         background-color: #ccc;
         border-radius: 5px;
         text-decoration: none;
-    }
-    .main__header {
-        text-align: center;
-        background-color: #a52a2a;
-        color: white;
-        padding: 0.3rem;
-    }
-    .secondary__header {
-        background-color: #A5622A;
-        text-align: center;
-        padding: 0.3rem;
-        margin: 0rem;
     }
     form {
         text-align: center;
@@ -493,7 +462,7 @@ th {
     }
 }
 
-@media screen and (max-width: 400px) {
+@media screen and (max-width: 430px) {
     body {
         font-size: 0.3rem;
     }
@@ -511,18 +480,6 @@ th {
         background-color: #ccc;
         border-radius: 5px;
         text-decoration: none;
-    }
-    .main__header {
-        text-align: center;
-        background-color: #a52a2a;
-        color: white;
-        padding: 0.3rem;
-    }
-    .secondary__header {
-        background-color: #A5622A;
-        text-align: center;
-        padding: 0.25rem;
-        margin: 0rem;
     }
     form {
         text-align: center;
