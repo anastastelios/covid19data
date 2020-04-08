@@ -245,7 +245,7 @@ submitBtn.addEventListener('click', (e) => {
 
                     Plotly.newPlot('myDiv', data, layout, { showSendToCloud: true });
                     spinner.classList.toggle("hide__spinner");
-                } else if (resp.data[resp.data.length - 1].Cases === 0) {
+                } else if (resp.data.length === 0 || resp.data[resp.data.length - 1].Cases === 0) {
                     graphDiv.innerHTML = '';
                     dataTable.innerHTML = '<h1 class="missing__data">There is not a single case at the moment</h1><br><h2 class="missing__data">Luckily we cannot make a graph yet</h2>';
                     spinner.classList.toggle("hide__spinner");
@@ -353,7 +353,7 @@ submitBtn.addEventListener('click', (e) => {
 
                     Plotly.newPlot('myDiv', data, layout, { showSendToCloud: true });
                     spinner.classList.toggle("hide__spinner");
-                } else if (resp.data[resp.data.length - 1].Cases === 0) {
+                } else if (resp.data.length === 0 || resp.data[resp.data.length - 1].Cases === 0) {
                     graphDiv.innerHTML = '';
                     dataTable.innerHTML = '<h1 class="missing__data">There is not a single case at the moment</h1><br><h2 class="missing__data">Luckily we cannot make a graph yet</h2>';
                     spinner.classList.toggle("hide__spinner");
@@ -469,7 +469,7 @@ submitBtn.addEventListener('click', (e) => {
 
                     Plotly.newPlot('myDiv', data, layout, { showSendToCloud: true });
                     spinner.classList.toggle("hide__spinner");
-                } else if (resp.data[resp.data.length - 1].Cases === 0) {
+                } else if (resp.data.length === 0 || resp.data[resp.data.length - 1].Cases === 0) {
                     graphDiv.innerHTML = '';
                     dataTable.innerHTML = '<h1 class="missing__data">There is not a single case at the moment</h1><br><h2 class="missing__data">Luckily we cannot make a graph yet</h2>';
                     spinner.classList.toggle("hide__spinner");
@@ -588,7 +588,7 @@ submitBtn.addEventListener('click', (e) => {
 
                     Plotly.newPlot('myDiv', data, layout, { showSendToCloud: true });
                     spinner.classList.toggle("hide__spinner");
-                } else if (resp.data[resp.data.length - 1].Cases === 0) {
+                } else if (resp.data.length === 0 || resp.data[resp.data.length - 1].Cases === 0) {
                     graphDiv.innerHTML = '';
                     dataTable.innerHTML = '<h1 class="missing__data">There is not a single case at the moment</h1><br><h2 class="missing__data">Luckily we cannot make a graph yet</h2>';
                     spinner.classList.toggle("hide__spinner");
@@ -733,7 +733,7 @@ submitBtn.addEventListener('click', (e) => {
 
                             Plotly.newPlot('myDiv', data, layout, { showSendToCloud: true });
                             spinner.classList.toggle("hide__spinner");
-                        } else if (resp.data[resp.data.length - 1].Cases === 0) {
+                        } else if (resp.data.length === 0 || resp.data[resp.data.length - 1].Cases === 0) {
                             graphDiv.innerHTML = '';
                             dataTable.innerHTML = '<h1 class="missing__data">There is not a single case at the moment</h1><br><h2 class="missing__data">Luckily we cannot make a graph yet</h2>';
                             spinner.classList.toggle("hide__spinner");
@@ -905,7 +905,7 @@ submitBtn.addEventListener('click', (e) => {
 
                             Plotly.newPlot('myDiv', data, layout, { showSendToCloud: true });
                             spinner.classList.toggle("hide__spinner");
-                        } else if (resp.data[resp.data.length - 1].Cases === 0) {
+                        } else if (resp.data.length === 0 || resp.data[resp.data.length - 1].Cases === 0) {
                             graphDiv.innerHTML = '';
                             dataTable.innerHTML = '<h1 class="missing__data">There is not a single case at the moment</h1><br><h2 class="missing__data">Luckily we cannot make a graph yet</h2>';
                             spinner.classList.toggle("hide__spinner");
@@ -1700,7 +1700,7 @@ comparisonDetails.addEventListener('click', e => {
 });
 
 comparisonGRDetails.addEventListener('click', e => {
-    alert(`Για να κάνετε συγκρίσεις, επιλέξτε έναν από τους τρόπους σύγκρισης στο κάτω αναπτυσσόμενο μενού, στη συνέχεια επιλέξτε μια χώρα από το πάνω αναπτυσσόμενο μενού και πατήστε submit/υποβλολή. Τώρα επιλέξτε άλλη χώρα από το αναπτυσσόμενο μενού στο πάνω μενού διατηρώντας παράλληλα το κάτω ως έχει (όπως είναι με την προηγούμενη επιλογή) και πατήστε ξανά submit/υποβολή. Τώρα μπορείτε να επιλέξετε πάλι περισσότερες χώρες για να συμπεριλάβετε στο γράφημα σύγκρισης με τον ίδιο τρόπο. Εάν θέλετε να εκτελέσετε μια νέα σύγκριση, ανανεώστε τη σελίδα. Σημείωση: Εάν το γράφημα δεν φαίνεται σωστό, παρακαλώ ανανεώστε τη σελίδα και δοκιμάστε ξανά. Επίσης, να σημειωθεί ότι σε χώρες όπως οι Ηνωμένες Πολιτείες της Αμερικής μπορεί να χρειαστεί λίγος χρόνος για να φορτωθούν τα δεδομένα, οπότε παρακαλούμε να είστε υπομονετικοί.`);
+    alert(`Για να κάνετε συγκρίσεις, επιλέξτε έναν από τους τρόπους σύγκρισης στο κάτω αναπτυσσόμενο μενού, στη συνέχεια επιλέξτε μια χώρα από το πάνω αναπτυσσόμενο μενού και πατήστε submit/υποβολή. Τώρα επιλέξτε άλλη χώρα από το αναπτυσσόμενο μενού στο πάνω μενού διατηρώντας παράλληλα το κάτω ως έχει (όπως είναι με την προηγούμενη επιλογή) και πατήστε ξανά submit/υποβολή. Τώρα μπορείτε να επιλέξετε πάλι περισσότερες χώρες για να συμπεριλάβετε στο γράφημα σύγκρισης με τον ίδιο τρόπο. Εάν θέλετε να εκτελέσετε μια νέα σύγκριση, ανανεώστε τη σελίδα. Σημείωση: Εάν το γράφημα δεν φαίνεται σωστό, παρακαλώ ανανεώστε τη σελίδα και δοκιμάστε ξανά. Επίσης, να σημειωθεί ότι σε χώρες όπως οι Ηνωμένες Πολιτείες της Αμερικής μπορεί να χρειαστεί λίγος χρόνος για να φορτωθούν τα δεδομένα, οπότε παρακαλούμε να είστε υπομονετικοί.`);
 });
 
 // about.addEventListener('click', e => {
