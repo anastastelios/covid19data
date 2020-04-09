@@ -14,7 +14,7 @@ const comparisonDetails = document.getElementById('comparison__details');
 const comparisonGRDetails = document.getElementById('comparison__details_GR');
 const about = document.getElementById('about');
 
-const complicatedCountries = ['australia', 'canada', 'china', 'france', 'germany', 'netherlands', 'united-kingdom', 'united-states', 'cuba'];
+const complicatedCountries = ['australia', 'canada', 'china', 'france', 'germany', 'netherlands', 'united-kingdom', 'united-states', 'cuba', 'denmark', 'guyana'];
 const extraComplicatedCountries = [];
 const doubleCountries = ['Iran (Islamic Republic of)', 'Korea, South', 'Republic of Korea', 'Taiwan*', 'Bahamas, The', '', 'Others', 'Republic of the Congo', 'The Bahamas'];
 const usedCountries = [];
@@ -39,7 +39,6 @@ axios(`https://api.covid19api.com/countries`)
 
 axios(`https://api.covid19api.com/summary`)
     .then(resp => {
-
         fetch('./worldpopulation.json')
             .then(res => res.json())
             .then(data => {
