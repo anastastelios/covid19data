@@ -212,6 +212,9 @@ submitBtn.addEventListener('click', (e) => {
                         }
                     });
 
+                    dateTable.pop();
+                    casesTable.pop();
+
                     dataTable.innerHTML = '';
 
                     var trace1 = {
@@ -297,6 +300,7 @@ submitBtn.addEventListener('click', (e) => {
     if (selectElem.value === 'casesGraph') {
         axios(`https://api.covid19api.com/country/${curCountry.toLowerCase()}/status/confirmed`)
             .then(resp => {
+                console.log(resp);
                 tableTitles.innerHTML = '';
                 if (complicatedCountries.findIndex(item => item === curCountry) > -1) {
                     let dateTable = [resp.data[0].Date];
@@ -320,6 +324,10 @@ submitBtn.addEventListener('click', (e) => {
                             }
                         }
                     });
+
+                    dateTable.pop();
+                    casesTable.pop();
+
                     dataTable.innerHTML = '';
 
                     var trace1 = {
@@ -436,6 +444,9 @@ submitBtn.addEventListener('click', (e) => {
                             casesTableDif.push(day);
                         }
                     });
+
+                    dateTable.pop();
+                    casesTableDif.pop();
 
                     dataTable.innerHTML = '';
 
@@ -556,6 +567,10 @@ submitBtn.addEventListener('click', (e) => {
                             casesTableDif.push(day);
                         }
                     });
+
+                    dateTable.pop();
+                    casesTableDif.pop();
+
                     dataTable.innerHTML = '';
 
                     var trace1 = {
@@ -691,6 +706,12 @@ submitBtn.addEventListener('click', (e) => {
                                     }
                                 }
                             });
+
+                            dateTable.pop();
+                            casesTable.pop();
+
+                            dateTable2.pop();
+                            casesTable2.pop();
 
                             dataTable.innerHTML = '';
 
@@ -866,6 +887,12 @@ submitBtn.addEventListener('click', (e) => {
                                 }
                             });
 
+                            dateTable.pop();
+                            casesTableDif.pop();
+
+                            dateTable2.pop();
+                            casesTableDif2.pop();
+
                             dataTable.innerHTML = '';
 
                             var trace1 = {
@@ -1006,6 +1033,9 @@ submitBtn.addEventListener('click', (e) => {
                         }
                     });
 
+                    dateTable.pop();
+                    casesTable.pop();
+
                     dataTable.innerHTML = '';
 
                     var trace1 = {
@@ -1118,6 +1148,9 @@ submitBtn.addEventListener('click', (e) => {
                             }
                         }
                     });
+
+                    dateTable.pop();
+                    casesTable.pop();
 
                     dataTable.innerHTML = '';
 
@@ -1234,6 +1267,9 @@ submitBtn.addEventListener('click', (e) => {
                             }
                         }
                     });
+
+                    dateTable.pop();
+                    casesTable.pop();
 
                     dataTable.innerHTML = '';
 
@@ -1356,6 +1392,9 @@ submitBtn.addEventListener('click', (e) => {
                             }
                         }
                     });
+
+                    dateTable.pop();
+                    casesTable.pop();
 
                     dataTable.innerHTML = '';
 
@@ -1483,6 +1522,9 @@ submitBtn.addEventListener('click', (e) => {
                         dateTable.push(i);
                     }
 
+                    dateTable.pop();
+                    casesTable.pop();
+
                     dataTable.innerHTML = '';
 
                     var trace1 = {
@@ -1608,6 +1650,9 @@ submitBtn.addEventListener('click', (e) => {
                     for (let i = 0; i < casesTable.length; i++) {
                         dateTable.push(i);
                     }
+
+                    dateTable.pop();
+                    casesTable.pop();
 
                     dataTable.innerHTML = '';
 
