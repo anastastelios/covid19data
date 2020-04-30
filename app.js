@@ -247,7 +247,7 @@ submitBtn.addEventListener('click', (e) => {
 
                     Plotly.newPlot('myDiv', data, layout, { showSendToCloud: true });
                     spinner.classList.toggle("hide__spinner");
-                } else if (resp.data.length === 0 || resp.data[resp.data.length - 1].Cases === 0) {
+                } else if (resp.data.length === 0 || resp.data[resp.data.length - 2].Cases === 0) {
                     graphDiv.innerHTML = '';
                     dataTable.innerHTML = '<h1 class="missing__data">There is not a single case at the moment</h1><br><h2 class="missing__data">Luckily we cannot make a graph yet</h2>';
                     spinner.classList.toggle("hide__spinner");
@@ -259,6 +259,8 @@ submitBtn.addEventListener('click', (e) => {
                         casesTable.push(day.Cases);
                     });
 
+                    dateTable.pop();
+                    casesTable.pop();
                     dataTable.innerHTML = '';
 
                     var trace1 = {
@@ -300,7 +302,6 @@ submitBtn.addEventListener('click', (e) => {
     if (selectElem.value === 'casesGraph') {
         axios(`https://api.covid19api.com/country/${curCountry.toLowerCase()}/status/confirmed`)
             .then(resp => {
-                console.log(resp);
                 tableTitles.innerHTML = '';
                 if (complicatedCountries.findIndex(item => item === curCountry) > -1) {
                     let dateTable = [resp.data[0].Date];
@@ -360,7 +361,7 @@ submitBtn.addEventListener('click', (e) => {
 
                     Plotly.newPlot('myDiv', data, layout, { showSendToCloud: true });
                     spinner.classList.toggle("hide__spinner");
-                } else if (resp.data.length === 0 || resp.data[resp.data.length - 1].Cases === 0) {
+                } else if (resp.data.length === 0 || resp.data[resp.data.length - 2].Cases === 0) {
                     graphDiv.innerHTML = '';
                     dataTable.innerHTML = '<h1 class="missing__data">There is not a single case at the moment</h1><br><h2 class="missing__data">Luckily we cannot make a graph yet</h2>';
                     spinner.classList.toggle("hide__spinner");
@@ -372,6 +373,8 @@ submitBtn.addEventListener('click', (e) => {
                         casesTable.push(day.Cases);
                     });
 
+                    dateTable.pop();
+                    casesTable.pop();
                     dataTable.innerHTML = '';
 
                     var trace1 = {
@@ -479,7 +482,7 @@ submitBtn.addEventListener('click', (e) => {
 
                     Plotly.newPlot('myDiv', data, layout, { showSendToCloud: true });
                     spinner.classList.toggle("hide__spinner");
-                } else if (resp.data.length === 0 || resp.data[resp.data.length - 1].Cases === 0) {
+                } else if (resp.data.length === 0 || resp.data[resp.data.length - 2].Cases === 0) {
                     graphDiv.innerHTML = '';
                     dataTable.innerHTML = '<h1 class="missing__data">There is not a single case at the moment</h1><br><h2 class="missing__data">Luckily we cannot make a graph yet</h2>';
                     spinner.classList.toggle("hide__spinner");
@@ -495,6 +498,8 @@ submitBtn.addEventListener('click', (e) => {
                         }
                     });
 
+                    dateTable.pop();
+                    casesTable.pop();
                     dataTable.innerHTML = '';
 
                     var trace1 = {
@@ -602,7 +607,7 @@ submitBtn.addEventListener('click', (e) => {
 
                     Plotly.newPlot('myDiv', data, layout, { showSendToCloud: true });
                     spinner.classList.toggle("hide__spinner");
-                } else if (resp.data.length === 0 || resp.data[resp.data.length - 1].Cases === 0) {
+                } else if (resp.data.length === 0 || resp.data[resp.data.length - 2].Cases === 0) {
                     graphDiv.innerHTML = '';
                     dataTable.innerHTML = '<h1 class="missing__data">There is not a single case at the moment</h1><br><h2 class="missing__data">Luckily we cannot make a graph yet</h2>';
                     spinner.classList.toggle("hide__spinner");
@@ -618,6 +623,8 @@ submitBtn.addEventListener('click', (e) => {
                         }
                     });
 
+                    dateTable.pop();
+                    casesTable.pop();
                     dataTable.innerHTML = '';
 
                     var trace1 = {
@@ -753,7 +760,7 @@ submitBtn.addEventListener('click', (e) => {
 
                             Plotly.newPlot('myDiv', data, layout, { showSendToCloud: true });
                             spinner.classList.toggle("hide__spinner");
-                        } else if (resp.data.length === 0 || resp.data[resp.data.length - 1].Cases === 0) {
+                        } else if (resp.data.length === 0 || resp.data[resp.data.length - 2].Cases === 0) {
                             graphDiv.innerHTML = '';
                             dataTable.innerHTML = '<h1 class="missing__data">There is not a single case at the moment</h1><br><h2 class="missing__data">Luckily we cannot make a graph yet</h2>';
                             spinner.classList.toggle("hide__spinner");
@@ -772,6 +779,10 @@ submitBtn.addEventListener('click', (e) => {
                                 casesTable2.push(day.Cases);
                             });
 
+                            dateTable.pop();
+                            casesTable.pop();
+                            dateTable2.pop();
+                            casesTable2.pop();
                             dataTable.innerHTML = '';
 
                             var trace1 = {
@@ -931,7 +942,7 @@ submitBtn.addEventListener('click', (e) => {
 
                             Plotly.newPlot('myDiv', data, layout, { showSendToCloud: true });
                             spinner.classList.toggle("hide__spinner");
-                        } else if (resp.data.length === 0 || resp.data[resp.data.length - 1].Cases === 0) {
+                        } else if (resp.data.length === 0 || resp.data[resp.data.length - 2].Cases === 0) {
                             graphDiv.innerHTML = '';
                             dataTable.innerHTML = '<h1 class="missing__data">There is not a single case at the moment</h1><br><h2 class="missing__data">Luckily we cannot make a graph yet</h2>';
                             spinner.classList.toggle("hide__spinner");
@@ -958,6 +969,10 @@ submitBtn.addEventListener('click', (e) => {
                                 }
                             });
 
+                            dateTable.pop();
+                            casesTable.pop();
+                            dateTable2.pop();
+                            casesTable2.pop();
                             dataTable.innerHTML = '';
 
                             var trace1 = {
@@ -1069,7 +1084,7 @@ submitBtn.addEventListener('click', (e) => {
                     Plotly.plot('myDiv', data, layout, { showSendToCloud: true });
                     spinner.classList.toggle("hide__spinner");
                     usedCountries.push(curCountry);
-                } else if (resp.data.length === 0 || resp.data[resp.data.length - 1].Cases === 0) {
+                } else if (resp.data.length === 0 || resp.data[resp.data.length - 2].Cases === 0) {
                     dataTable.innerHTML = '<h1 class="missing__data">There is not a single case at the moment</h1><br><h2 class="missing__data">Luckily we cannot make a graph yet</h2>';
                     spinner.classList.toggle("hide__spinner");
                 } else {
@@ -1080,6 +1095,8 @@ submitBtn.addEventListener('click', (e) => {
                         casesTable.push(day.Cases);
                     });
 
+                    dateTable.pop();
+                    casesTable.pop();
                     dataTable.innerHTML = '';
 
                     var trace1 = {
@@ -1185,7 +1202,7 @@ submitBtn.addEventListener('click', (e) => {
                     Plotly.plot('myDiv', data, layout, { showSendToCloud: true });
                     spinner.classList.toggle("hide__spinner");
                     usedCountries.push(curCountry);
-                } else if (resp.data.length === 0 || resp.data[resp.data.length - 1].Cases === 0) {
+                } else if (resp.data.length === 0 || resp.data[resp.data.length - 2].Cases === 0) {
                     dataTable.innerHTML = '<h1 class="missing__data">There is not a single case at the moment</h1><br><h2 class="missing__data">Luckily we cannot make a graph yet</h2>';
                     spinner.classList.toggle("hide__spinner");
                 } else {
@@ -1196,6 +1213,8 @@ submitBtn.addEventListener('click', (e) => {
                         casesTable.push(day.Cases);
                     });
 
+                    dateTable.pop();
+                    casesTable.pop();
                     dataTable.innerHTML = '';
 
                     var trace1 = {
@@ -1306,7 +1325,7 @@ submitBtn.addEventListener('click', (e) => {
                 } else if (extraComplicatedCountries.findIndex(item => item === curCountry) > -1) {
                     dataTable.innerHTML = '<h1 class="missing__data">This data will be available soon</h1><br><h2 class="missing__data">Error printing graph</h2>';
                     spinner.classList.toggle("hide__spinner");
-                } else if (resp.data.length === 0 || resp.data[resp.data.length - 1].Cases === 0) {
+                } else if (resp.data.length === 0 || resp.data[resp.data.length - 2].Cases === 0) {
                     dataTable.innerHTML = '<h1 class="missing__data">There is not a single case at the moment</h1><br><h2 class="missing__data">Luckily we cannot make a graph yet</h2>';
                     spinner.classList.toggle("hide__spinner");
                 } else {
@@ -1322,6 +1341,8 @@ submitBtn.addEventListener('click', (e) => {
                         }
                     });
 
+                    dateTable.pop();
+                    casesTable.pop();
                     dataTable.innerHTML = '';
 
                     var trace1 = {
@@ -1428,7 +1449,7 @@ submitBtn.addEventListener('click', (e) => {
                     Plotly.plot('myDiv', data, layout, { showSendToCloud: true });
                     spinner.classList.toggle("hide__spinner");
                     usedCountries.push(curCountry);
-                } else if (resp.data.length === 0 || resp.data[resp.data.length - 1].Cases === 0) {
+                } else if (resp.data.length === 0 || resp.data[resp.data.length - 2].Cases === 0) {
                     dataTable.innerHTML = '<h1 class="missing__data">There is not a single case at the moment</h1><br><h2 class="missing__data">Luckily we cannot make a graph yet</h2>';
                     spinner.classList.toggle("hide__spinner");
                 } else {
@@ -1444,6 +1465,8 @@ submitBtn.addEventListener('click', (e) => {
                         }
                     });
 
+                    dateTable.pop();
+                    casesTable.pop();
                     dataTable.innerHTML = '';
 
                     var trace1 = {
@@ -1557,7 +1580,7 @@ submitBtn.addEventListener('click', (e) => {
                     Plotly.plot('myDiv', data, layout, { showSendToCloud: true });
                     spinner.classList.toggle("hide__spinner");
                     usedCountries.push(curCountry);
-                } else if (resp.data.length === 0 || resp.data[resp.data.length - 1].Cases < 10) {
+                } else if (resp.data.length === 0 || resp.data[resp.data.length - 2].Cases < 10) {
                     dataTable.innerHTML = '<h1 class="missing__data">There are just a few or no cases at the moment</h1><br><h2 class="missing__data">Luckily we cannot make a graph yet</h2>';
                     spinner.classList.toggle("hide__spinner");
                 } else {
@@ -1573,6 +1596,8 @@ submitBtn.addEventListener('click', (e) => {
                         }
                     });
 
+                    dateTable.pop();
+                    casesTable.pop();
                     dataTable.innerHTML = '';
 
                     var trace1 = {
@@ -1685,7 +1710,7 @@ submitBtn.addEventListener('click', (e) => {
                     Plotly.plot('myDiv', data, layout, { showSendToCloud: true });
                     spinner.classList.toggle("hide__spinner");
                     usedCountries.push(curCountry);
-                } else if (resp.data.length === 0 || resp.data[resp.data.length - 1].Cases < 10) {
+                } else if (resp.data.length === 0 || resp.data[resp.data.length - 2].Cases < 10) {
                     dataTable.innerHTML = '<h1 class="missing__data">There are just a few or no cases at the moment</h1><br><h2 class="missing__data">Luckily we cannot make a graph yet</h2>';
                     spinner.classList.toggle("hide__spinner");
                 } else {
@@ -1701,6 +1726,8 @@ submitBtn.addEventListener('click', (e) => {
                         }
                     });
 
+                    dateTable.pop();
+                    casesTable.pop();
                     dataTable.innerHTML = '';
 
                     var trace1 = {
